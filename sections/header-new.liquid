@@ -1,20 +1,21 @@
-{%  liquid 
+{% liquid
   if section.settings.logo_position == '-1'
     assign logo_align = 'start'
-    assign menu_align  = 'center'
-  else 
+    assign menu_align = 'center'
+  else
     assign logo_align = 'center'
-    assign menu_align  = 'start'
+    assign menu_align = 'start'
   endif
 %}
 
 <style>
-  .header{
+  custom-header.header{
     --bg-clr: {{section.settings.color_scheme.settings.background}};
+    --text-clr: {{ section.settings.color_scheme.settings.text }};
     --logo-align: {{ logo_align }};
     --menu-align: {{ menu_align }};
     --logo-order: {{ section.settings.logo_position }};
-  } 
+  }
 </style>
 
 {{ 'header-new.css' | asset_url | stylesheet_tag }}
@@ -23,7 +24,7 @@
 <custom-header class="header">
   <div class="menu">
     <div class="menu--mobile">
-      <button popovertarget="menu__links--popover">
+      <button popovertarget="menu__links--popover" aria-label="Menu Icon">
         {{ 'icon-hamburger.svg' | inline_asset_content }}
         {{ 'icon-close.svg' | inline_asset_content }}
       </button>
@@ -52,7 +53,7 @@
     </div>
   {% endif %}
   <div class="menu__cart-container">
-    {{ 'icon-cart.svg' | inline_asset_content }}
+    <a href="{{routes.cart_url}}" aria-label="Cart link">{{ 'icon-cart.svg' | inline_asset_content }}</a>
   </div>
 </custom-header>
 
@@ -76,7 +77,7 @@
       "id": "logo_position",
       "label": "Logo Position",
       "options": [
-         {
+        {
           "value": "-1",
           "label": "Left"
         },
@@ -90,7 +91,8 @@
     {
       "type": "color_scheme",
       "id": "color_scheme",
-      "label": "Color Scheme"
+      "label": "Color Scheme",
+      "default": "scheme-1"
     }
   ]
 }
