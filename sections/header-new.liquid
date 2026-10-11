@@ -1,0 +1,97 @@
+{%  liquid 
+  if section.settings.logo_position == '-1'
+    assign logo_align = 'start'
+    assign menu_align  = 'center'
+  else 
+    assign logo_align = 'center'
+    assign menu_align  = 'start'
+  endif
+%}
+
+<style>
+  .header{
+    --bg-clr: {{section.settings.color_scheme.settings.background}};
+    --logo-align: {{ logo_align }};
+    --menu-align: {{ menu_align }};
+    --logo-order: {{ section.settings.logo_position }};
+  } 
+</style>
+
+{{ 'header-new.css' | asset_url | stylesheet_tag }}
+<script src="{{'header-new.js' |  asset_url}}" async></script>
+
+<custom-header class="header">
+  <div class="menu">
+    <div class="menu--mobile">
+      <button popovertarget="menu__links--popover">
+        {{ 'icon-hamburger.svg' | inline_asset_content }}
+        {{ 'icon-close.svg' | inline_asset_content }}
+      </button>
+
+      <div popover id="menu__links--popover" class="menu__links-container">
+        <ul class="menu__links">
+          {% for link in section.settings.links.links %}
+            <li>
+              <a href="{{link.url}}">{{ link.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <ul class="menu__links">
+      {% for link in section.settings.links.links %}
+        <li>
+          <a href="{{link.url}}">{{ link.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% if section.settings.logo %}
+    <div class="menu__logo-container">
+      {{ section.settings.logo | image_url: width: 100 | image_tag }}
+    </div>
+  {% endif %}
+  <div class="menu__cart-container">
+    {{ 'icon-cart.svg' | inline_asset_content }}
+  </div>
+</custom-header>
+
+{% schema %}
+{
+  "name": "header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "links",
+      "label": "menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "select",
+      "id": "logo_position",
+      "label": "Logo Position",
+      "options": [
+         {
+          "value": "-1",
+          "label": "Left"
+        },
+        {
+          "value": "0",
+          "label": "Center"
+        }
+      ],
+      "default": "0"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme"
+    }
+  ]
+}
+{% endschema %}
