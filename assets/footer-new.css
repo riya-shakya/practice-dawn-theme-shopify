@@ -1,0 +1,102 @@
+.custom-footer {
+  --grey-clr: color-mix(in srgb, var(--text-clr) 20%, transparent);
+
+  background-color: var(--bg-clr);
+  color: var(--text-clr);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 2rem;
+
+  h3{
+    font-weight: 700;
+    opacity: 0.6;
+  }
+
+  .subscribe {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    form {
+      display: flex;
+
+      input[type="email"] {
+        flex: 0 1 auto;
+        padding: 0.5rem;
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid var(--grey-clr);
+
+        &::placeholder {
+          font-size: 18px;
+          font-weight: 500;
+        }
+
+        &:focus-visible{
+          outline: none;
+          box-shadow: none;
+        }
+      }
+
+      button {
+        border: none;
+        background: inherit;
+        margin-left: -25px;
+        color: var(--grey-clr);
+      }
+    }
+  }
+
+  .navigation {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    .nav-block {
+      border-bottom: 1px solid var(--grey-clr);
+
+      ul {
+        padding-left: 0;
+        list-style: none;
+      }
+
+      li {
+        padding: 1rem;
+      }
+
+      a {
+        color: var(--text-clr);
+        text-decoration: none;
+
+        &:hover{
+          text-decoration: underline;
+        }
+      }
+
+      @media only screen and (min-width: 1024px){
+        border-bottom: none;
+      }
+
+    }
+
+    & > :last-child{
+      border-bottom: none;
+    }
+
+    @media only screen and (min-width: 1024px){
+      flex-direction: row;
+    }
+  }
+
+  @media only screen and (min-width: 1024px) {
+    flex-direction: row;
+  }
+}
+
+.subscribe > button svg {
+  width: 20px;
+  height: 20px;
+}
