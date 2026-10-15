@@ -1,0 +1,71 @@
+@property --scroll-percentage {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 0%;
+}
+
+@keyframes native-scroll-sync {
+  from {
+    --scroll-percentage: 0%;
+  }
+  to {
+    --scroll-percentage: 100%;
+  }
+}
+
+.accompany-with-section {
+  --scrollbar-bg-clr: #d1d5db;
+  --scrollbar-progress-clr: #000000;
+
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 2rem 2rem 2rem;
+  background-color: var(--bg-clr);
+  color: var(--text-clr);
+
+  .img-section {
+    display: flex;
+    gap: 10px;
+    padding-bottom: 10px;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    animation: native-scroll-sync linear both;
+    animation-timeline: scroll(x self);
+
+    &::-webkit-scrollbar {
+      height: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: var(--scrollbar-bg-clr);
+      border-radius: 4px;
+      background-image: linear-gradient(var(--scrollbar-progress-clr), var(--scrollbar-progress-clr));
+      background-repeat: no-repeat;
+      background-size: var(--scroll-percentage, 0%) 100%;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-progress-clr);
+      border-radius: 4px;
+    }
+
+    @media only screen and (min-width: 768px){
+      flex: 0 1 60%;
+    }
+
+    img {
+      width: 300px;
+      height: 100%;
+    }
+  }
+
+  @media only screen and (min-width: 768px){
+    flex-direction: row;
+    gap: 20px;
+    padding: 5rem 2rem;
+
+    .accompany-text{
+      width: 45%;
+    }
+  }
+}

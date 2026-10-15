@@ -1,0 +1,70 @@
+<style>
+  .how-to-use{
+    --background-clr: {{section.settings.how_to_use_color_scheme.settings.background}};
+    --text-clr: {{section.settings.how_to_use_color_scheme.settings.text}};
+  }
+</style>
+
+{{'component-how-to-use.css' | asset_url | stylesheet_tag}}
+
+{% if section.settings.how_to_use_image %}
+  {{ section.settings.how_to_use_image | image_url: width: 1200 | image_tag: class: 'how-to-use-image' }}
+{% endif %}
+<div class="how-to-use-content">
+  <div class="how-to-use-container">
+    <h2 class="heading">How to use</h2>
+    <div class="how-to-use-description">
+      {{ section.settings.how_to_use_text }}
+    </div>
+  </div>
+  <div class="extra-info-container">
+    <div class="info-container">
+      <h3 class="heading">Dosage</h3>
+      <p>{{ section.settings.dosage }}</p>
+    </div>
+    <div class="info-container">
+      <h3 class="heading">Texture</h3>
+      <p>{{ section.settings.texture }}</p>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "How to Use",
+  "class": "how-to-use",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "how_to_use_color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "image_picker",
+      "id": "how_to_use_image",
+      "label": "How to use image"
+    },
+    {
+      "type": "richtext",
+      "id": "how_to_use_text",
+      "label": "How to use"
+    },
+    {
+      "type": "text",
+      "id": "dosage",
+      "label": "Dosage"
+    },
+    {
+      "type": "text",
+      "id": "texture",
+      "label": "Texture"
+    }
+  ],
+  "presets": [
+    {
+      "name": "How to use"
+    }
+  ]
+}
+{% endschema %}
