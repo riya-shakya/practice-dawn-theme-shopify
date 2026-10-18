@@ -1,0 +1,131 @@
+<style>
+  .custom-collection{
+    --bg-clr: {{ section.settings.color_scheme.settings.background }};
+    --text-clr: {{ section.settings.color_scheme.settings.text }}
+  }
+</style>
+
+{{ 'component-collection-new.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'custom-collection.js' |  asset_url }}" defer></script>
+
+<custom-collection data-section-id="{{section.id}}">
+  <div class="collection-content">
+    <h1>{{ section.settings.heading }}</h1>
+
+    {% comment %} <div class="filters-container">
+      {% for filter in collection.filters %}
+        <a href="{{filter.url_to_remove}}" data-href="{{filter.url_to_remove}}"
+        {%  if filter.active_values.size == 0 %} 
+          class="active"
+        {% endif %}
+        >All Skin Care</a>
+
+        {% for filter_value in filter.values %}
+          {% assign single_filter_url = collection.url
+            | append: '?'
+            | append: filter_value.param_name
+            | append: '='
+            | append: filter_value.value
+          %}
+          <a
+            href="{{single_filter_url}}"
+            data-href="{{single_filter_url}}"
+            {% if filter_value.active %}
+              class="active"
+            {% endif %}
+          >
+            {{- filter_value.label -}}
+          </a>
+        {% endfor %}
+      {% endfor %}
+    </div> {% endcomment %}
+
+    <fieldset class="filters-container">
+
+    
+    </fieldset>
+
+    <div class="collection-info">
+      <h1>{{ shop.name }}</h1>
+      <p>{{ collection.description }}</p>
+      <h1>{{ collection.title }}</h1>
+    </div>
+  </div>
+
+  <div class="collection__product-grid">
+    {% paginate collection.products by 12 %}
+      <div class="products">
+        {% for product in collection.products %}
+        <a href="{{product.url}}">
+          <figure class="collection__product">
+            <div class="product__img-container">
+              {{ product.featured_image | image_url: width: 200 | image_tag }}
+            </div>
+            <figcaption>
+              <p>{{ product.title }}</p>
+              <p>{{ product.price | money }}</p>
+            </figcaption>
+          </figure>
+          </a>
+        {% endfor %}
+      </div>
+      {% render 'custom-pagination', paginate: paginate, color_scheme: section.settings.color_scheme %}
+    {% endpaginate %}
+  </div>
+
+
+  {% comment %} <div class="skeleton">
+    <div class="collection-content">
+      <h1></h1>
+      <div class="filters-container">
+        {% for filter in collection.filters %}
+          <a></a>
+          {% for filter_value in filter %}
+            <a></a>
+          {% endfor %}
+        {% endfor %}
+      </div>
+      <div class="collection-info">
+        <h1></h1>
+        <p></p>
+        <h1></h1>
+      </div>
+
+    </div>
+    <div class="collection__product-grid">
+      {% for item in (1..12) %}
+        <div class="products">
+          <figure class="collection__product">
+            <img/>
+            <figcaption>
+              <p></p>
+              <p></p>
+            </figcaption>
+          </figure>
+        </div>
+      {% endfor %}
+    </div>
+  </div> {% endcomment %}
+</custom-collection>
+
+
+
+{% schema %}
+{
+  "name": "Collection",
+  "class": "custom-collection",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<i>Browse</i> our <i>product</i> offering"
+    }
+  ]
+}
+{% endschema %}

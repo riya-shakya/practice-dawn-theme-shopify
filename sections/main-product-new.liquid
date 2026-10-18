@@ -19,16 +19,31 @@
 </style>
 
 {{ 'component-main-product-new.css' | asset_url | stylesheet_tag }}
+<script src="{{'custom-variant-selector.js' |  asset_url}}" defer></script>
 <script src="{{'main-product-new.js'|  asset_url}}" defer></script>
 
 <h2 class="product__vendor">{{ product.vendor }}</h2>
 <div class="product__title-and-image">
   {{ product.featured_image | image_url: width: 1200 | image_tag: class: 'product__image' }}
-  <div class="product__variants">
-    {% for variant in product.variants %}
-      <a href="{{variant.url}}" aria-label="Select {{variant.title}}">{{ variant.title }}</a>
-    {% endfor %}
-  </div>
+
+  <custom-variant-selector data-section-id="{{section.id}}" class="product__variants">
+    <fieldset>
+      {% for variant in product.variants %}
+        <div>
+          <input
+            type="radio"
+            name="product-variant"
+            value="{{variant.url}} "
+            id="{{variant.title}}"
+            {% if product.selected_or_first_available_variant.id == variant.id %}
+              checked
+            {% endif %}
+          />
+          <label for="{{variant.title}}">{{ variant.title }}</label>
+        </div>
+      {% endfor %}
+    </fieldset>
+  </custom-variant-selector>
 </div>
 {% if section.blocks.size > 0 %}
   <div class="product__information">

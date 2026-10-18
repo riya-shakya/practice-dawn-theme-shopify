@@ -21,14 +21,10 @@
   height: auto;
 }
 
-.product__variants {
+.product__variants fieldset {
   display: flex;
-  gap: 10px;
-}
-
-.product__variants a {
-  color: var(--text-clr);
-  text-decoration: none;
+  gap: 20px;
+  border: none;
 }
 
 .product__metafields {

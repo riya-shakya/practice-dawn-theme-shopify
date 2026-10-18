@@ -1,0 +1,93 @@
+{% comment %}
+  Renders pagination
+
+  Accepts:
+  - paginate: {Object}
+  - color_scheme: {Object}
+
+  Usage:
+  {% render 'custom-pagination', paginate: paginate, color_scheme: color_scheme %}
+{% endcomment %}
+
+<style>
+  .pagination {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    padding: 2rem;
+
+    .paginate-arrow-btn {
+      border: 0;
+      outline: 0;
+      background-color: {{color_scheme.settings.background}};
+
+      span {
+        opacity: 0.5;
+      }
+
+      .arrow svg {
+        width: 20px;
+      }
+
+      .arrow--left svg {
+        transform: rotate(180deg);
+      }
+    }
+
+    a {
+      color: {{ color_scheme.settings.text }};
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .current-page {
+      font-weight: 700;
+    }
+  }
+</style>
+
+<div class="pagination">
+  <button class="paginate-arrow-btn">
+    {% if paginate.previous.url == blank %}
+      <span class="arrow arrow--left">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+    {% else %}
+      <a href="{{paginate.previous.url}}" data-href="{{paginate.previous.url}}" class="arrow arrow--left" aria-label="Previous page">
+        {{- 'icon-arrow.svg' | inline_asset_content -}}
+      </a>
+    {% endif %}
+  </button>
+
+  {% for part in paginate.parts %}
+    {% assign page_number = forloop.index %}
+    {% if part.is_link %}
+      <a
+        href="{{part.url}}"
+        data-href="{{part.url}}"
+        aria-label="Page {{part.title}}"
+      >
+        {{- part.title -}}
+      </a>
+    {% else %}
+      <span
+        {% if page_number == paginate.current_page %}
+          class="current-page"
+        {% endif %}
+      >
+        {{- part.title -}}
+      </span>
+    {% endif %}
+  {% endfor %}
+
+  <button class="paginate-arrow-btn">
+    {% if paginate.next.url == blank %}
+      <span class="arrow arrow--right">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+    {% else %}
+      <a href="{{paginate.next.url}}" data-href="{{paginate.next.url}}" class="arrow arrow--right" aria-label="Next Page">
+        {{- 'icon-arrow.svg' | inline_asset_content -}}
+      </a>
+    {% endif %}
+  </button>
+</div>
