@@ -18,6 +18,7 @@ class CustomVariantSelector extends HTMLElement {
 
     const href = event.target.value;
     const url = new URL(href, location.origin);
+    history.pushState(null, "", url);
     const sectionId = this.dataset.sectionId;
     url.searchParams.append("section_id", sectionId);
 

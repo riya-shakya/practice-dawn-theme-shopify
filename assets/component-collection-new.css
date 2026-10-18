@@ -7,17 +7,21 @@
 
     .filters-container {
       display: flex;
+      border: none;
 
-      a {
+      input {
+        display: none;
+
+        &:checked + label {
+          background-color: var(--text-clr);
+          color: var(--bg-clr);
+        }
+      }
+
+      label {
         padding: 1rem;
         border: 1px solid var(--text-clr);
         color: var(--text-clr);
-        text-decoration: none;
-      }
-
-      .active {
-        background-color: var(--text-clr);
-        color: var(--bg-clr);
       }
     }
   }
@@ -44,28 +48,28 @@
         color: var(--text-clr);
         text-decoration: none;
 
-      .collection__product{
-        height: min-content;
+        .collection__product {
+          height: min-content;
 
-        img {
-          width: 100%;
-          height: 250px;
-          object-fit: cover;
-        }
-
-        figcaption {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 5px;
-          padding: 10px;
-
-          p {
-            margin: 0;
-            padding: 0;
-            text-align: center;
+          img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
           }
-      } 
+
+          figcaption {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 10px;
+
+            p {
+              margin: 0;
+              padding: 0;
+              text-align: center;
+            }
+          }
         }
 
         @media only screen and (min-width: 768px) and (max-width: 1024px) {
@@ -77,5 +81,63 @@
         }
       }
     }
+  }
+}
+
+@keyframes shimmer_effect {
+  0% {
+    transform: translateX(-200%);
+  }
+
+  100% {
+    transform: translateX(1200%);
+  }
+}
+
+.skeleton {
+  background-color: grey;
+
+  & * {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    pointer-events: none;
+    cursor: not-allowed;
+    user-select: none;
+  }
+
+  span,
+  img,
+  p,
+  svg,
+  .product__img-container,
+  .filters-container a {
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      position: absolute;
+      content: "";
+      inset: 0;
+      background-color: lightgray;
+      z-index: 1;
+    }
+
+    &::after {
+      position: absolute;
+      content: "";
+      width: 10%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      animation: shimmer_effect 1s ease-in-out infinite;
+      background-color: white;
+      z-index: 2;
+      box-shadow: 0 0 24px 20px white;
+    }
+  }
+
+  .products > a {
+    background-color: grey;
   }
 }

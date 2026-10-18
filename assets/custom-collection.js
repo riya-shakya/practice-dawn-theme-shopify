@@ -6,11 +6,15 @@ class CustomCollection extends HTMLElement {
 
   async renderNewSection(event) {
     const target = event.target;
+
+    if (target.closest("fieldset") && event.type == "click") return;
+
     const href =
       target.dataset.href ?? target.closest("[data-href]")?.dataset.href;
 
     if (!href) return;
     event.preventDefault();
+    this.querySelector(".collection__product-grid").classList.add("skeleton");
 
     let url = new URL(href, location.origin);
     history.pushState(null, "", url);
@@ -26,15 +30,18 @@ class CustomCollection extends HTMLElement {
 
       sessionStorage.setItem(url.toString(), sessionGetItem);
     }
+
     this.innerHTML = sessionGetItem;
   }
 
   connectedCallback() {
     this.addEventListener("click", this.renderNewSection);
+    this.addEventListener("change", this.renderNewSection);
   }
 
   disconnectedCallback() {
     this.removeEventListener("click", this.renderNewSection);
+    this.removeEventListener("change", this.renderNewSection);
   }
 }
 

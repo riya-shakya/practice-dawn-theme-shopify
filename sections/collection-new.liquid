@@ -12,13 +12,21 @@
   <div class="collection-content">
     <h1>{{ section.settings.heading }}</h1>
 
-    {% comment %} <div class="filters-container">
+    <fieldset class="filters-container">
       {% for filter in collection.filters %}
-        <a href="{{filter.url_to_remove}}" data-href="{{filter.url_to_remove}}"
-        {%  if filter.active_values.size == 0 %} 
-          class="active"
-        {% endif %}
-        >All Skin Care</a>
+        <input
+          type="radio"
+          name="filters"
+          value="{{filter.url_to_remove}}"
+          id="{{filter.label}}"
+          data-href="{{ filter.url_to_remove }}"
+          {% if filter.active_values.size == 0 %}
+            checked
+          {% endif %}
+        />
+        <label for="{{filter.label}}">
+          {{ filter.label }}
+        </label>
 
         {% for filter_value in filter.values %}
           {% assign single_filter_url = collection.url
@@ -27,22 +35,19 @@
             | append: '='
             | append: filter_value.value
           %}
-          <a
-            href="{{single_filter_url}}"
+          <input
+            type="radio"
+            name="filters"
+            value="{{single_filter_url}}"
+            id="{{filter_value.label}}"
             data-href="{{single_filter_url}}"
             {% if filter_value.active %}
-              class="active"
+              checked
             {% endif %}
-          >
-            {{- filter_value.label -}}
-          </a>
+          />
+          <label for="{{filter_value.label}}">{{ filter_value.label }}</label>
         {% endfor %}
       {% endfor %}
-    </div> {% endcomment %}
-
-    <fieldset class="filters-container">
-
-    
     </fieldset>
 
     <div class="collection-info">
@@ -56,59 +61,23 @@
     {% paginate collection.products by 12 %}
       <div class="products">
         {% for product in collection.products %}
-        <a href="{{product.url}}">
-          <figure class="collection__product">
-            <div class="product__img-container">
-              {{ product.featured_image | image_url: width: 200 | image_tag }}
-            </div>
-            <figcaption>
-              <p>{{ product.title }}</p>
-              <p>{{ product.price | money }}</p>
-            </figcaption>
-          </figure>
+          <a href="{{product.url}}">
+            <figure class="collection__product">
+              <div class="product__img-container">
+                {{ product.featured_image | image_url: width: 200 | image_tag }}
+              </div>
+              <figcaption>
+                <p>{{ product.title }}</p>
+                <p>{{ product.price | money }}</p>
+              </figcaption>
+            </figure>
           </a>
         {% endfor %}
       </div>
       {% render 'custom-pagination', paginate: paginate, color_scheme: section.settings.color_scheme %}
     {% endpaginate %}
   </div>
-
-
-  {% comment %} <div class="skeleton">
-    <div class="collection-content">
-      <h1></h1>
-      <div class="filters-container">
-        {% for filter in collection.filters %}
-          <a></a>
-          {% for filter_value in filter %}
-            <a></a>
-          {% endfor %}
-        {% endfor %}
-      </div>
-      <div class="collection-info">
-        <h1></h1>
-        <p></p>
-        <h1></h1>
-      </div>
-
-    </div>
-    <div class="collection__product-grid">
-      {% for item in (1..12) %}
-        <div class="products">
-          <figure class="collection__product">
-            <img/>
-            <figcaption>
-              <p></p>
-              <p></p>
-            </figcaption>
-          </figure>
-        </div>
-      {% endfor %}
-    </div>
-  </div> {% endcomment %}
 </custom-collection>
-
-
 
 {% schema %}
 {
