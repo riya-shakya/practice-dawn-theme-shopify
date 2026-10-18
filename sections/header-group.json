@@ -15,9 +15,9 @@
       "type": "header-new",
       "settings": {
         "links": "main-menu",
-        "logo": "shopify://shop_images/Main_b13ad453-477c-4ed1-9b43-81f3345adfd6.jpg",
+        "logo": "shopify://shop_images/radiant-roots-logo.png",
         "logo_position": "-1",
-        "color_scheme": ""
+        "color_scheme": "scheme-2"
       }
     }
   },

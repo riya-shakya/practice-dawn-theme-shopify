@@ -6,7 +6,6 @@
   padding: 0.5rem 2rem 2rem 2rem;
   gap: 10px;
   background-color: var(--bg-clr);
-
 }
 
 .product__title-and-image {
@@ -195,10 +194,10 @@
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
   .product__vendor {
-    flex-basis: 15%;
+    flex-basis: 20%;
   }
   .product__title-and-image {
-    flex-basis: 40%;
+    flex-basis: 30%;
   }
   .product__information {
     flex-basis: 40%;

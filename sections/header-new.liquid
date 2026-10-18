@@ -49,7 +49,7 @@
   </div>
   {% if section.settings.logo %}
     <div class="menu__logo-container">
-      {{ section.settings.logo | image_url: width: 100 | image_tag }}
+      {{ section.settings.logo | image_url: width: 570 | image_tag: widths: '160, 190, 320, 380, 570', sizes: '(max-width: 768px) 160px, 190px' }}
     </div>
   {% endif %}
   <div class="menu__cart-container">

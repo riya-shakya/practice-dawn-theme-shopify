@@ -24,9 +24,7 @@
             checked
           {% endif %}
         />
-        <label for="{{filter.label}}">
-          {{ filter.label }}
-        </label>
+        <label for="{{filter.label}}"> All Products </label>
 
         {% for filter_value in filter.values %}
           {% assign single_filter_url = collection.url

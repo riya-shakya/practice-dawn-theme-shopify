@@ -44,7 +44,7 @@
     "how_to_use": {
       "type": "how-to-use",
       "settings": {
-        "how_to_use_color_scheme": "",
+        "how_to_use_color_scheme": "scheme-2",
         "how_to_use_image": "{{ product.metafields.custom.how_to_use_image.value }}",
         "how_to_use_text": "<p>{{ product.metafields.custom.how_to_use | metafield_tag }}</p>",
         "dosage": "{{ product.metafields.custom.dosage.value }}",

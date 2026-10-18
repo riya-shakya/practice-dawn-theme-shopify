@@ -36,12 +36,15 @@ custom-header.header > * {
 
 .menu__logo-container {
   display: grid;
+  min-width: 0;
   place-items: var(--logo-align);
   order: var(--logo-order);
 }
 
 .menu__logo-container img {
-  height: 64px;
+  width: 190px;
+  max-width: 100%;
+  height: auto;
 }
 
 .menu__cart-container {
@@ -86,9 +89,14 @@ custom-header.header .menu--mobile {
     display: none;
   }
 
-  .menu__logo-container {
+  custom-header.header > .menu__logo-container {
+    flex: 0 1 160px;
     place-items: center;
     order: 0;
+  }
+
+  .menu__logo-container img {
+    width: 160px;
   }
 
   .menu > .menu__links {

@@ -26,24 +26,26 @@
 <div class="product__title-and-image">
   {{ product.featured_image | image_url: width: 1200 | image_tag: class: 'product__image' }}
 
-  <custom-variant-selector data-section-id="{{section.id}}" class="product__variants">
-    <fieldset>
-      {% for variant in product.variants %}
-        <div>
-          <input
-            type="radio"
-            name="product-variant"
-            value="{{variant.url}} "
-            id="{{variant.title}}"
-            {% if product.selected_or_first_available_variant.id == variant.id %}
-              checked
-            {% endif %}
-          />
-          <label for="{{variant.title}}">{{ variant.title }}</label>
-        </div>
-      {% endfor %}
-    </fieldset>
-  </custom-variant-selector>
+  {% if product.variants.size > 1 %}
+    <custom-variant-selector data-section-id="{{section.id}}" class="product__variants">
+      <fieldset>
+        {% for variant in product.variants %}
+          <div>
+            <input
+              type="radio"
+              name="product-variant"
+              value="{{variant.url}} "
+              id="{{variant.title}}"
+              {% if product.selected_or_first_available_variant.id == variant.id %}
+                checked
+              {% endif %}
+            />
+            <label for="{{variant.title}}">{{ variant.title }}</label>
+          </div>
+        {% endfor %}
+      </fieldset>
+    </custom-variant-selector>
+  {% endif %}
 </div>
 {% if section.blocks.size > 0 %}
   <div class="product__information">
