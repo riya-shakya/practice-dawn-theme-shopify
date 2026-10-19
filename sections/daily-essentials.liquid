@@ -7,12 +7,13 @@
     --daily-essentials-heading-size: clamp(2.4rem, 3vw, 4.8rem);
     --daily-essentials-heading-font: Georgia, 'Times New Roman', serif;
     --daily-essentials-card-size: 44%;
+    --daily-essentials-desktop-columns: 4;
     --daily-essentials-body-size: 1.4rem;
   }
 </style>
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
-  <div class="daily-essentials__content page-width">
+  <slider-component class="daily-essentials__content page-width">
     <div class="daily-essentials__header">
       <div>
         {%- if section.settings.eyebrow != blank -%}
@@ -24,18 +25,43 @@
           </h2>
         {%- endif -%}
       </div>
-      {%- if section.settings.collection != blank -%}
-        <a
-          class="daily-essentials__collection-link"
-          href="{{ section.settings.collection.url }}"
-          aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: section.settings.collection.title | escape }}"
-        >
-          <span aria-hidden="true">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
-        </a>
-      {%- endif -%}
+      <div class="daily-essentials__controls">
+        {%- if section.settings.collection != blank -%}
+          <a
+            class="daily-essentials__collection-link"
+            href="{{ section.settings.collection.url }}"
+            aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: section.settings.collection.title | escape }}"
+          >
+            {{- 'sections.featured_collection.view_all' | t -}}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.collection.products_count > 1 and section.settings.products_to_show > 1 -%}
+          <button
+            class="daily-essentials__button"
+            type="button"
+            name="previous"
+            aria-controls="Slider-{{ section.id }}"
+            aria-label="{{ 'general.slider.previous_slide' | t }}"
+            disabled
+          >
+            <span aria-hidden="true">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+          </button>
+          <button
+            class="daily-essentials__button"
+            type="button"
+            name="next"
+            aria-controls="Slider-{{ section.id }}"
+            aria-label="{{ 'general.slider.next_slide' | t }}"
+            disabled
+          >
+            <span aria-hidden="true">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+          </button>
+        {%- endif -%}
+      </div>
     </div>
     <ul
       class="daily-essentials__products"
+      id="Slider-{{ section.id }}"
       role="list"
       {% if section.settings.heading != blank %}
         aria-labelledby="DailyEssentialsHeading-{{ section.id }}"
@@ -45,7 +71,7 @@
       tabindex="0"
     >
       {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
-        <li class="daily-essentials__item">
+        <li class="daily-essentials__item" id="Slide-{{ section.id }}-{{ product.id }}">
           <a class="daily-essentials__card" href="{{ product.url }}">
             {%- if product.featured_image != blank -%}
               {{
@@ -69,7 +95,7 @@
         </li>
       {%- endfor -%}
     </ul>
-  </div>
+  </slider-component>
 </div>
 
 {% schema %}
