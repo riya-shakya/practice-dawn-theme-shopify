@@ -1,4 +1,31 @@
-{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign mode = section.settings.mode | default: 'collection'
+
+  if mode == 'collection'
+    assign cards = section.settings.collection.products
+    assign card_count = cards.size | at_most: section.settings.products_to_show
+    assign placeholder_image = 'product-1'
+    assign desktop_columns = 4
+    assign view_all_url = section.settings.collection.url
+  else
+    assign cards = section.blocks
+    assign card_count = cards.size
+    assign placeholder_image = 'image'
+    assign desktop_columns = 3
+    assign view_all_url = section.settings.link | default: routes.all_products_collection_url
+  endif
+
+  assign font_scale = settings.body_scale | divided_by: 100.0
+  assign image_sizes = '(min-width: 750px) calc((min(100vw, calc(PAGE_WIDTHpx * FONT_SCALE)) - 100px * FONT_SCALE - GRID_GAPpx * (COLUMNS - 1)) / COLUMNS), calc((100vw - 30px * FONT_SCALE) * 0.44)'
+  assign image_sizes = image_sizes | replace: 'PAGE_WIDTH', settings.page_width
+  assign image_sizes = image_sizes | replace: 'GRID_GAP', settings.spacing_grid_horizontal
+  assign image_sizes = image_sizes | replace: 'COLUMNS', desktop_columns
+  assign image_sizes = image_sizes | replace: 'FONT_SCALE', font_scale
+-%}
+
+{%- if mode == 'collection' -%}
+  {{ 'component-price.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
 {{ 'daily-essentials.css' | asset_url | stylesheet_tag }}
 
 <style>
@@ -7,7 +34,7 @@
     --daily-essentials-heading-size: clamp(2.4rem, 3vw, 4.8rem);
     --daily-essentials-heading-font: Georgia, 'Times New Roman', serif;
     --daily-essentials-card-size: 44%;
-    --daily-essentials-desktop-columns: 4;
+    --daily-essentials-desktop-columns: {{ desktop_columns }};
     --daily-essentials-body-size: 1.4rem;
   }
 </style>
@@ -26,75 +53,113 @@
         {%- endif -%}
       </div>
       <div class="daily-essentials__controls">
-        {%- if section.settings.collection != blank -%}
+        {%- if view_all_url != blank -%}
           <a
             class="daily-essentials__collection-link"
-            href="{{ section.settings.collection.url }}"
-            aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: section.settings.collection.title | escape }}"
+            href="{{ view_all_url | escape }}"
+            {% if mode == 'collection' %}
+              aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: section.settings.collection.title | escape }}"
+            {% endif %}
           >
             {{- 'sections.featured_collection.view_all' | t -}}
           </a>
         {%- endif -%}
-        {%- if section.settings.collection.products_count > 1 and section.settings.products_to_show > 1 -%}
-          <button
-            class="daily-essentials__button"
-            type="button"
-            name="previous"
-            aria-controls="Slider-{{ section.id }}"
-            aria-label="{{ 'general.slider.previous_slide' | t }}"
-            disabled
-          >
-            <span aria-hidden="true">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
-          </button>
-          <button
-            class="daily-essentials__button"
-            type="button"
-            name="next"
-            aria-controls="Slider-{{ section.id }}"
-            aria-label="{{ 'general.slider.next_slide' | t }}"
-            disabled
-          >
-            <span aria-hidden="true">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
-          </button>
+        {%- if card_count > 1 -%}
+          {%- assign button_directions = 'previous,next' | split: ',' -%}
+          {%- for direction in button_directions -%}
+            {%- assign button_label_key = 'general.slider.' | append: direction | append: '_slide' -%}
+            <button
+              class="daily-essentials__button"
+              type="button"
+              name="{{ direction }}"
+              aria-controls="Slider-{{ section.id }}"
+              aria-label="{{ button_label_key | t }}"
+              disabled
+            >
+              <span aria-hidden="true">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+            </button>
+          {%- endfor -%}
         {%- endif -%}
       </div>
     </div>
-    <ul
-      class="daily-essentials__products"
-      id="Slider-{{ section.id }}"
-      role="list"
-      {% if section.settings.heading != blank %}
-        aria-labelledby="DailyEssentialsHeading-{{ section.id }}"
-      {% else %}
-        aria-label="{{ 'templates.search.products' | t | escape }}"
-      {% endif %}
-      tabindex="0"
-    >
-      {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
-        <li class="daily-essentials__item" id="Slide-{{ section.id }}-{{ product.id }}">
-          <a class="daily-essentials__card" href="{{ product.url }}">
-            {%- if product.featured_image != blank -%}
-              {{
-                product.featured_image
-                | image_url: width: 768
-                | image_tag:
-                  class: 'daily-essentials__image',
-                  widths: '384, 768',
-                  sizes: '(min-width: 750px) 25vw, 44vw',
-                  loading: 'lazy',
-                  alt: ''
-              }}
-            {%- else -%}
-              {{ 'product-1' | placeholder_svg_tag: 'daily-essentials__image' }}
-            {%- endif -%}
-            <h3 class="daily-essentials__title">
-              {{- product.title | escape -}}
-            </h3>
-            {% render 'price', product: product %}
-          </a>
-        </li>
-      {%- endfor -%}
-    </ul>
+    {%- if card_count > 0 -%}
+      <ul
+        class="daily-essentials__products"
+        id="Slider-{{ section.id }}"
+        role="list"
+        {% if section.settings.heading != blank %}
+          aria-labelledby="DailyEssentialsHeading-{{ section.id }}"
+        {% else %}
+          aria-label="{{ 'templates.search.products' | t | escape }}"
+        {% endif %}
+        tabindex="0"
+      >
+        {%- for item in cards limit: card_count -%}
+          {%- liquid
+            if mode == 'collection'
+              assign card_label = item.title
+              assign card_image = item.featured_image
+              assign card_url = item.url
+            else
+              assign card_label = item.settings.title
+              assign card_image = item.settings.image
+              assign card_url = item.settings.link
+            endif
+          -%}
+          <li
+            class="daily-essentials__item"
+            id="Slide-{{ section.id }}-{{ item.id }}"
+            {% if mode == 'custom_cards' %}
+              {{ item.shopify_attributes }}
+            {% endif %}
+          >
+            <a
+              class="daily-essentials__card{% if mode == 'custom_cards' %} daily-essentials__card--custom{% endif %}"
+              {% if card_url != blank %}
+                href="{{ card_url | escape }}"
+                {% if mode == 'custom_cards' %}
+                  aria-label="{{ card_label | default: card_image.alt | default: card_url | escape }}"
+                {% endif %}
+              {% endif %}
+            >
+              <figure>
+                {%- if card_image != blank -%}
+                  {{
+                    card_image
+                    | image_url: width: 768
+                    | image_tag:
+                      class: 'daily-essentials__image',
+                      widths: '384, 768',
+                      sizes: image_sizes,
+                      loading: 'lazy',
+                      alt: ''
+                  }}
+                {%- else -%}
+                  {{ placeholder_image | placeholder_svg_tag: 'daily-essentials__image' }}
+                {%- endif -%}
+                {%- if card_label != blank or mode == 'collection' -%}
+                  <figcaption>
+                    {%- if card_label != blank -%}
+                      <h3 class="daily-essentials__title">
+                        {{- card_label | escape }}
+                        {%- if mode == 'custom_cards' and card_url != blank -%}
+                          <span aria-hidden="true">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+                        {%- endif -%}
+                      </h3>
+                    {%- endif -%}
+                    {%- if mode == 'collection' -%}
+                      {% render 'price', product: item %}
+                    {%- endif -%}
+                  </figcaption>
+                {%- endif -%}
+              </figure>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- elsif request.design_mode -%}
+      <p>{{ 'sections.collection_template.empty' | t }}</p>
+    {%- endif -%}
   </slider-component>
 </div>
 
@@ -103,6 +168,22 @@
   "name": "Daily essentials",
   "class": "daily-essentials",
   "settings": [
+    {
+      "type": "select",
+      "id": "mode",
+      "label": "Content",
+      "options": [
+        {
+          "value": "collection",
+          "label": "Collection"
+        },
+        {
+          "value": "custom_cards",
+          "label": "Custom cards"
+        }
+      ],
+      "default": "collection"
+    },
     {
       "type": "text",
       "id": "eyebrow",
@@ -118,7 +199,8 @@
     {
       "type": "collection",
       "id": "collection",
-      "label": "Collection"
+      "label": "Collection",
+      "info": "Used in Collection mode."
     },
     {
       "type": "range",
@@ -127,7 +209,14 @@
       "min": 1,
       "max": 24,
       "step": 1,
-      "default": 5
+      "default": 5,
+      "visible_if": "{{ section.settings.mode == 'collection' }}"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "View all link",
+      "visible_if": "{{ section.settings.mode == 'custom_cards' }}"
     },
     {
       "type": "color_scheme",
@@ -136,9 +225,64 @@
       "default": "scheme-1"
     }
   ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Custom card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Label",
+          "default": "Card label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "Daily essentials"
+      "name": "Daily essentials",
+      "settings": {
+        "mode": "collection"
+      }
+    },
+    {
+      "name": "Care, made personal",
+      "settings": {
+        "mode": "custom_cards",
+        "eyebrow": "Skin concern",
+        "heading": "Care, made personal."
+      },
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "title": "For dry skin"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "For dull skin"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "For everyday balance"
+          }
+        }
+      ]
     }
   ]
 }

@@ -15,6 +15,7 @@
     "daily_essentials": {
       "type": "daily-essentials",
       "settings": {
+        "mode": "collection",
         "eyebrow": "The daily essentials",
         "heading": "Good habits begin here.",
         "collection": "skincare",
@@ -56,7 +57,37 @@
         "heading": "Find your everyday ritual.",
         "color_scheme": "scheme-1"
       }
+    },
+    "care_personal": {
+      "type": "daily-essentials",
+      "blocks": {
+        "dry_skin": {
+          "type": "card",
+          "settings": {
+            "title": "For dry skin"
+          }
+        },
+        "dull_skin": {
+          "type": "card",
+          "settings": {
+            "title": "For dull skin"
+          }
+        },
+        "everyday_balance": {
+          "type": "card",
+          "settings": {
+            "title": "For everyday balance"
+          }
+        }
+      },
+      "block_order": ["dry_skin", "dull_skin", "everyday_balance"],
+      "settings": {
+        "mode": "custom_cards",
+        "eyebrow": "Skin concern",
+        "heading": "Care, made personal.",
+        "color_scheme": "scheme-1"
+      }
     }
   },
-  "order": ["home_banner", "daily_essentials", "everyday_ritual"]
+  "order": ["home_banner", "daily_essentials", "everyday_ritual", "care_personal"]
 }
