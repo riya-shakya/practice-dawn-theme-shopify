@@ -1,0 +1,133 @@
+{%- liquid
+  assign banner_image = section.settings.image | default: section.settings.mobile_image
+  assign mobile_image = section.settings.mobile_image
+  assign image_priority = 'auto'
+  if section.index == 1
+    assign image_priority = 'high'
+  endif
+-%}
+
+{{ 'home-banner.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --home-banner-card: {{ section.settings.card_color }};
+    --home-banner-text: {{ section.settings.text_color }};
+    --home-banner-space: 0.8rem;
+    --home-banner-gap: calc(2 * var(--home-banner-space));
+    --home-banner-padding: calc(3 * var(--home-banner-space));
+    --home-banner-inset: calc(4 * var(--home-banner-space));
+    --home-banner-card-width: 40%;
+    --home-banner-ratio: 16 / 7;
+    --home-banner-mobile-ratio: 5 / 4;
+    --home-banner-heading-font: Georgia, 'Times New Roman', serif;
+    --home-banner-heading-size: clamp(3.2rem, 4vw, 6.4rem);
+    --home-banner-body-size: 1.4rem;
+  }
+</style>
+
+<div class="home-banner__media">
+  {%- if banner_image != blank -%}
+    <picture>
+      {%- if mobile_image != blank and mobile_image != banner_image -%}
+        <source
+          media="(max-width: 749px)"
+          srcset="{{ mobile_image | image_url: width: 768 }} 768w, {{ mobile_image | image_url: width: 1536 }} 1536w"
+          sizes="calc(100vw - 20px)"
+        >
+      {%- endif -%}
+      {{
+        banner_image
+        | image_url: width: 1920
+        | image_tag:
+          class: 'home-banner__image',
+          widths: '768, 1536, 1920',
+          sizes: 'calc(100vw - 20px)',
+          loading: 'eager',
+          fetchpriority: image_priority,
+          alt: banner_image.alt
+      }}
+    </picture>
+  {%- else -%}
+    {{- 'lifestyle-1' | placeholder_svg_tag: 'home-banner__image' -}}
+  {%- endif -%}
+</div>
+<div class="home-banner__card">
+  {%- if section.settings.heading != blank -%}
+    <h1 id="HomeBannerHeading-{{ section.id }}" class="home-banner__heading">
+      {{- section.settings.heading | escape | newline_to_br -}}
+    </h1>
+  {%- endif -%}
+  {%- if section.settings.text != blank -%}
+    <p class="home-banner__text">{{ section.settings.text | escape }}</p>
+  {%- endif -%}
+  {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+    <a class="home-banner__button" href="{{ section.settings.button_link }}">
+      <span>{{ section.settings.button_label | escape }}</span>
+      <span aria-hidden="true">
+        {{- 'icon-arrow.svg' | inline_asset_content -}}
+      </span>
+    </a>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Home banner",
+  "class": "home-banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Desktop image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image",
+      "info": "Optional. Uses the desktop image when empty."
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A little care.\nEvery day."
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Considered formulations for daily rituals."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Explore skin care"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card background",
+      "default": "#F0EDE4"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#272822"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home banner"
+    }
+  ]
+}
+{% endschema %}
