@@ -11,7 +11,17 @@
         "card_color": "#F0EDE4",
         "text_color": "#272822"
       }
+    },
+    "daily_essentials": {
+      "type": "daily-essentials",
+      "settings": {
+        "eyebrow": "The daily essentials",
+        "heading": "Good habits begin here.",
+        "collection": "skincare",
+        "products_to_show": 5,
+        "color_scheme": "scheme-1"
+      }
     }
   },
-  "order": ["home_banner"]
+  "order": ["home_banner", "daily_essentials"]
 }

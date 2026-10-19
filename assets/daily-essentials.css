@@ -1,0 +1,115 @@
+.daily-essentials {
+  & .daily-essentials__content {
+    padding-block: calc(4 * var(--daily-essentials-space));
+  }
+
+  & .daily-essentials__header {
+    display: flex;
+    align-items: center;
+    gap: var(--daily-essentials-space);
+    justify-content: space-between;
+    margin-block-end: calc(2 * var(--daily-essentials-space));
+  }
+
+  & .daily-essentials__eyebrow,
+  & .daily-essentials__heading,
+  & .daily-essentials__title {
+    margin: 0;
+    color: inherit;
+  }
+
+  & .daily-essentials__eyebrow {
+    margin-block-end: var(--daily-essentials-space);
+    font-size: 0.75em;
+    text-transform: uppercase;
+  }
+
+  & .daily-essentials__heading {
+    font: 400 var(--daily-essentials-heading-size) / 1.1
+      var(--daily-essentials-heading-font);
+    letter-spacing: normal;
+  }
+
+  & .daily-essentials__collection-link {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    min-width: 44px;
+    min-height: 44px;
+
+    & svg {
+      display: block;
+      height: auto;
+    }
+  }
+
+  & .daily-essentials__products {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: var(--daily-essentials-card-size);
+    gap: var(--grid-mobile-horizontal-spacing);
+    margin: 0;
+    padding: var(--daily-essentials-space) 0;
+    list-style: none;
+    min-width: 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  & .daily-essentials__item {
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  & .daily-essentials__card {
+    display: grid;
+    gap: var(--daily-essentials-space);
+    font-size: var(--daily-essentials-body-size);
+  }
+
+  & .daily-essentials__card,
+  & .daily-essentials__collection-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  & .daily-essentials__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
+  & .daily-essentials__title,
+  & .price {
+    font: inherit;
+    letter-spacing: inherit;
+  }
+
+  & .daily-essentials__card[href]:hover .daily-essentials__title {
+    text-decoration: underline;
+  }
+
+  .daily-essentials__card,
+  .daily-essentials__collection-link,
+  .daily-essentials__products {
+    &:focus-visible {
+      outline: var(--focused-base-outline);
+      outline-offset: calc(-1 * var(--daily-essentials-space));
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    & .daily-essentials__products {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--grid-desktop-horizontal-spacing);
+    }
+  }
+}
