@@ -21,7 +21,42 @@
         "products_to_show": 5,
         "color_scheme": "scheme-1"
       }
+    },
+    "everyday_ritual": {
+      "type": "everyday-ritual",
+      "blocks": {
+        "cleanse": {
+          "type": "step",
+          "settings": {
+            "title": "Cleanse",
+            "description": "<p>A gentle, effective cleanse to refresh the skin and prepare for what's next.</p>",
+            "link_label": "Explore cleansers"
+          }
+        },
+        "balance": {
+          "type": "step",
+          "settings": {
+            "title": "Balance",
+            "description": "<p>Refresh and balance your skin after cleansing.</p>",
+            "link_label": "Explore toners"
+          }
+        },
+        "hydrate": {
+          "type": "step",
+          "settings": {
+            "title": "Hydrate",
+            "description": "<p>Complete your daily ritual with lasting hydration.</p>",
+            "link_label": "Explore moisturisers"
+          }
+        }
+      },
+      "block_order": ["cleanse", "balance", "hydrate"],
+      "settings": {
+        "image": "shopify://shop_images/everyday-ritual.png",
+        "heading": "Find your everyday ritual.",
+        "color_scheme": "scheme-1"
+      }
     }
   },
-  "order": ["home_banner", "daily_essentials"]
+  "order": ["home_banner", "daily_essentials", "everyday_ritual"]
 }
