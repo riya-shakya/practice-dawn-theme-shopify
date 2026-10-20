@@ -1,6 +1,10 @@
 {%- liquid
   assign banner_image = section.settings.image | default: section.settings.mobile_image
   assign mobile_image = section.settings.mobile_image
+  assign image_sizes = 'calc(100vw - 20px)'
+  if section.settings.layout == 'evening'
+    assign image_sizes = '100vw'
+  endif
   assign image_priority = 'auto'
   if section.index == 1
     assign image_priority = 'high'
@@ -11,6 +15,7 @@
 
 <style>
   #shopify-section-{{ section.id }} {
+    --home-banner-margin: 1rem;
     --home-banner-card: {{ section.settings.card_color }};
     --home-banner-text: {{ section.settings.text_color }};
     --home-banner-space: 0.8rem;
@@ -23,17 +28,29 @@
     --home-banner-heading-font: Georgia, 'Times New Roman', serif;
     --home-banner-heading-size: clamp(3.2rem, 4vw, 6.4rem);
     --home-banner-body-size: 1.4rem;
+    {% if section.settings.layout == 'evening' %}
+      --home-banner-margin: 0;
+      --home-banner-card: {{ section.settings.color_scheme.settings.background }};
+      --home-banner-text: {{ section.settings.color_scheme.settings.text }};
+      --home-banner-ratio: 16 / 9;
+      --home-banner-mobile-ratio: 1 / 1;
+      --home-banner-heading-size: clamp(4.8rem, 11vw, 16rem);
+      --home-banner-body-size: clamp(1.6rem, 2vw, 2.8rem);
+      @media screen and (min-width: 750px) {
+        --home-banner-heading-size: clamp(4.8rem, min(11vw, 18vh), 16rem);
+      }
+    {% endif %}
   }
 </style>
 
-<div class="home-banner__media">
+<div class="home-banner__media{% if section.settings.layout == 'evening' %} home-banner__media--evening{% endif %}">
   {%- if banner_image != blank -%}
     <picture>
       {%- if mobile_image != blank and mobile_image != banner_image -%}
         <source
           media="(max-width: 749px)"
-          srcset="{{ mobile_image | image_url: width: 768 }} 768w, {{ mobile_image | image_url: width: 1536 }} 1536w"
-          sizes="calc(100vw - 20px)"
+          srcset="{{ mobile_image | image_url: width: 768 }} 768w, {{ mobile_image | image_url: width: 1086 }} 1086w"
+          sizes="{{ image_sizes }}"
         >
       {%- endif -%}
       {{
@@ -42,7 +59,7 @@
         | image_tag:
           class: 'home-banner__image',
           widths: '768, 1536, 1920',
-          sizes: 'calc(100vw - 20px)',
+          sizes: image_sizes,
           loading: 'eager',
           fetchpriority: image_priority,
           alt: banner_image.alt
@@ -52,7 +69,10 @@
     {{- 'lifestyle-1' | placeholder_svg_tag: 'home-banner__image' -}}
   {%- endif -%}
 </div>
-<div class="home-banner__card">
+<div class="home-banner__card{% if section.settings.layout == 'evening' %} home-banner__card--evening{% endif %}">
+  {%- if section.settings.layout == 'evening' and section.settings.eyebrow != blank -%}
+    <p class="home-banner__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+  {%- endif -%}
   {%- if section.settings.heading != blank -%}
     <h1 id="HomeBannerHeading-{{ section.id }}" class="home-banner__heading">
       {{- section.settings.heading | escape | newline_to_br -}}
@@ -76,6 +96,29 @@
   "name": "Home banner",
   "class": "home-banner",
   "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "home", "label": "Home" },
+        { "value": "evening", "label": "Evening" }
+      ],
+      "default": "home"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "visible_if": "{{ section.settings.layout == 'evening' }}"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-4",
+      "visible_if": "{{ section.settings.layout == 'evening' }}"
+    },
     {
       "type": "image_picker",
       "id": "image",
@@ -115,18 +158,32 @@
       "type": "color",
       "id": "card_color",
       "label": "Card background",
-      "default": "#F0EDE4"
+      "default": "#F0EDE4",
+      "visible_if": "{{ section.settings.layout == 'home' }}"
     },
     {
       "type": "color",
       "id": "text_color",
       "label": "Text color",
-      "default": "#272822"
+      "default": "#272822",
+      "visible_if": "{{ section.settings.layout == 'home' }}"
     }
   ],
   "presets": [
     {
       "name": "Home banner"
+    },
+    {
+      "name": "Evening banner",
+      "settings": {
+        "layout": "evening",
+        "eyebrow": "THE EVENING RESET",
+        "heading": "Leave the\nday behind.",
+        "text": "A simple ritual for the end of the day.",
+        "button_label": "Discover the ritual",
+        "button_link": "/collections/all",
+        "color_scheme": "scheme-4"
+      }
     }
   ]
 }

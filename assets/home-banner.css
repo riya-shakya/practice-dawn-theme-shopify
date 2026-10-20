@@ -1,27 +1,55 @@
 .home-banner {
   display: grid;
-  margin-inline: 1rem;
+  margin-inline: var(--home-banner-margin);
   color: var(--home-banner-text);
 
-  & .home-banner__media,
-  & .home-banner__card {
+  .home-banner__media {
     grid-area: 1 / 1;
+
+    @media screen and (max-width: 749px) {
+      grid-area: auto;
+    }
+
+    picture {
+      display: block;
+    }
+
+    .home-banner__image {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: var(--home-banner-ratio);
+      object-fit: cover;
+      object-position: right center;
+
+      @media screen and (max-width: 749px) {
+        aspect-ratio: var(--home-banner-mobile-ratio);
+      }
+    }
+
+    &.home-banner__media--evening {
+      grid-area: 1 / 1;
+      background: var(--home-banner-card);
+
+      picture {
+        height: 100%;
+      }
+
+      .home-banner__image {
+        height: 100%;
+        aspect-ratio: var(--home-banner-mobile-ratio);
+
+        @media screen and (min-width: 750px) {
+          height: auto;
+          max-height: 100vh;
+          aspect-ratio: var(--home-banner-ratio);
+        }
+      }
+    }
   }
 
-  & picture {
-    display: block;
-  }
-
-  & .home-banner__image {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: var(--home-banner-ratio);
-    object-fit: cover;
-    object-position: right center;
-  }
-
-  & .home-banner__card {
+  .home-banner__card {
+    grid-area: 1 / 1;
     display: grid;
     gap: var(--home-banner-gap);
     place-self: end start;
@@ -31,72 +59,85 @@
     background: var(--home-banner-card);
     font-size: var(--home-banner-body-size);
     line-height: 1.5;
-  }
 
-  & .home-banner__heading {
-    margin: 0;
-    color: inherit;
-    font: 400 var(--home-banner-heading-size) / 1 var(--home-banner-heading-font);
-    letter-spacing: normal;
-  }
-
-  & .home-banner__text {
-    margin: 0;
-  }
-
-  & .home-banner__button {
-    display: inline-flex;
-    align-items: center;
-    justify-self: start;
-    gap: var(--home-banner-gap);
-    min-height: 44px;
-    padding: var(--home-banner-space) var(--home-banner-gap);
-    border: 1px solid currentColor;
-    color: inherit;
-    text-decoration: none;
-    background:
-      linear-gradient(var(--home-banner-text), var(--home-banner-text)) left / 0 100%
-      no-repeat;
-    transition:
-      background-size var(--duration-medium) ease,
-      color var(--duration-medium) ease;
-
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
-
-    &:hover,
-    &:focus-visible {
-      background-size: 100% 100%;
-      color: var(--home-banner-card);
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--home-banner-text);
-      outline-offset: var(--home-banner-space);
-    }
-
-    & svg {
-      display: block;
-      width: 1.5em;
-      height: auto;
-    }
-  }
-
-  @media screen and (max-width: 749px) {
-    & .home-banner__media,
-    & .home-banner__card {
+    @media screen and (max-width: 749px) {
       grid-area: auto;
-    }
-
-    & .home-banner__image {
-      aspect-ratio: var(--home-banner-mobile-ratio);
-    }
-
-    & .home-banner__card {
       place-self: stretch;
       width: auto;
       margin: 0;
+    }
+
+    .home-banner__heading {
+      margin: 0;
+      color: inherit;
+      font: 400 var(--home-banner-heading-size) / 1 var(--home-banner-heading-font);
+      letter-spacing: normal;
+    }
+
+    .home-banner__text {
+      margin: 0;
+    }
+
+    .home-banner__button {
+      display: inline-flex;
+      align-items: center;
+      justify-self: start;
+      gap: var(--home-banner-gap);
+      min-height: 44px;
+      padding: var(--home-banner-space) var(--home-banner-gap);
+      border: 1px solid currentColor;
+      color: inherit;
+      text-decoration: none;
+      background:
+        linear-gradient(var(--home-banner-text), var(--home-banner-text)) left / 0 100%
+        no-repeat;
+      transition:
+        background-size var(--duration-medium) ease,
+        color var(--duration-medium) ease;
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
+
+      &:hover,
+      &:focus-visible {
+        background-size: 100% 100%;
+        color: var(--home-banner-card);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--home-banner-text);
+        outline-offset: var(--home-banner-space);
+      }
+
+      svg {
+        display: block;
+        width: 1.5em;
+        height: auto;
+      }
+    }
+
+    &.home-banner__card--evening {
+      grid-area: 1 / 1;
+      place-self: end start;
+      width: 100%;
+      margin: 0;
+      padding: var(--home-banner-gap) 1.5rem;
+      background: transparent;
+      font-family: var(--home-banner-heading-font);
+
+      .home-banner__eyebrow {
+        margin: 0;
+        font-family: var(--font-body-family);
+        font-size: 1.4rem;
+        letter-spacing: 0.08em;
+      }
+
+      @media screen and (min-width: 750px) {
+        width: 75%;
+        gap: min(var(--home-banner-gap), 2vh);
+        padding: min(var(--home-banner-inset), 4vh) 5rem;
+      }
     }
   }
 }
