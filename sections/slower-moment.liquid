@@ -1,0 +1,58 @@
+{{ 'slower-moment.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --slower-moment-background: {{ section.settings.color_scheme.settings.background }};
+    --slower-moment-text: {{ section.settings.color_scheme.settings.text }};
+    --slower-moment-heading-font: Georgia, 'Times New Roman', serif;
+    --slower-moment-space: max(var(--grid-desktop-horizontal-spacing), 1rem);
+  }
+</style>
+
+<div class="slower-moment__content page-width color-{{ section.settings.color_scheme }}">
+  {%- if section.settings.label != blank -%}
+    <p class="slower-moment__label">{{ section.settings.label | escape }}</p>
+  {%- endif -%}
+  <div class="slower-moment__body">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="slower-moment__heading">{{ section.settings.heading | escape | newline_to_br }}</h2>
+    {%- endif -%}
+    {%- if section.settings.description != blank -%}
+      <div class="slower-moment__description rte">{{ section.settings.description }}</div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "A slower moment",
+  "class": "slower-moment",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "A SLOWER MOMENT"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Less to do.\nMore time for you."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Supporting text",
+      "default": "<p>Cleanse. Replenish.<br>Take a moment. Discover a considered routine for your evening.</p>"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [{ "name": "A slower moment" }]
+}
+{% endschema %}

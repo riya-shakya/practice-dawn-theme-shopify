@@ -14,7 +14,16 @@
         "button_link": "/collections/skincare",
         "color_scheme": "scheme-4"
       }
+    },
+    "intro": {
+      "type": "slower-moment",
+      "settings": {
+        "label": "A SLOWER MOMENT",
+        "heading": "Less to do.\nMore time for you.",
+        "description": "<p>Cleanse. Replenish.<br>Take a moment. Discover a considered routine for your evening.</p>",
+        "color_scheme": "scheme-1"
+      }
     }
   },
-  "order": ["hero"]
+  "order": ["hero", "intro"]
 }
