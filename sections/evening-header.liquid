@@ -1,0 +1,82 @@
+{{ 'evening-header.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --evening-header-text: {{ section.settings.color_scheme.settings.text }};
+    --evening-header-fill: {{ section.settings.color_scheme.settings.background }};
+    --evening-header-space: min(var(--grid-mobile-horizontal-spacing), 1rem);
+
+    @media screen and (min-width: 750px) {
+      --evening-header-space: var(--grid-desktop-horizontal-spacing);
+    }
+  }
+</style>
+
+<div class="evening-header__content page-width">
+  <a class="evening-header__logo" href="{{ routes.root_url }}">
+    {%- if section.settings.logo != blank -%}
+      {{
+        section.settings.logo
+        | image_url: width: 320
+        | image_tag: widths: '160, 320', sizes: '160px', alt: shop.name, loading: 'eager'
+      }}
+    {%- else -%}
+      {{- section.settings.logo_text | default: shop.name | escape -}}
+    {%- endif -%}
+  </a>
+  <div class="evening-header__actions">
+    {%- if section.settings.campaign_label != blank -%}
+      <p class="evening-header__label">{{ section.settings.campaign_label | escape }}</p>
+    {%- endif -%}
+    {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+      <a class="evening-header__button" href="{{ section.settings.button_link | escape }}">
+        {{- section.settings.button_label | escape -}}
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Evening header",
+  "tag": "header",
+  "class": "evening-header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "info": "Used when no logo image is selected. Defaults to the store name."
+    },
+    {
+      "type": "text",
+      "id": "campaign_label",
+      "label": "Campaign label",
+      "default": "01 / THE EVENING RESET"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Explore skin care"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-4"
+    }
+  ]
+}
+{% endschema %}

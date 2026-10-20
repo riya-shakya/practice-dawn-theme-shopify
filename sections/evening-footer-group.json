@@ -1,0 +1,15 @@
+{
+  "type": "footer",
+  "name": "Evening footer",
+  "sections": {
+    "footer": {
+      "type": "evening-footer",
+      "settings": {
+        "contact_link": "/pages/contact",
+        "link": "/collections/skincare",
+        "color_scheme": "scheme-4"
+      }
+    }
+  },
+  "order": ["footer"]
+}

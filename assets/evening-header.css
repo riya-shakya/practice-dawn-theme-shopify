@@ -1,0 +1,89 @@
+.evening-header {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  color: var(--evening-header-text);
+
+  .evening-header__content {
+    display: flex;
+    max-width: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--evening-header-space);
+    padding-block: calc(2 * var(--evening-header-space));
+
+    @media screen and (min-width: 750px) {
+      gap: calc(2 * var(--evening-header-space));
+    }
+
+    .evening-header__logo {
+      flex-basis: 160px;
+      min-width: 0;
+      font: 400 2rem / 1.2 var(--font-heading-family);
+      letter-spacing: 0.2em;
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .evening-header__actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--evening-header-space) calc(2 * var(--evening-header-space));
+
+      .evening-header__label {
+        display: none;
+        margin: 0;
+        font-size: 1.2rem;
+        letter-spacing: 0.08em;
+        text-align: end;
+
+        @media screen and (min-width: 750px) {
+          display: block;
+        }
+      }
+
+      .evening-header__button {
+        padding: var(--evening-header-space);
+        border: 1px solid var(--evening-header-text);
+        font-family: var(--font-heading-family);
+        font-size: 1.4rem;
+        text-align: center;
+        background:
+          linear-gradient(var(--evening-header-text), var(--evening-header-text))
+          left / 0 100% no-repeat;
+        transition:
+          background-size var(--duration-medium),
+          color var(--duration-medium);
+
+        @media screen and (min-width: 750px) {
+          padding-inline: calc(2 * var(--evening-header-space));
+        }
+
+        &:hover,
+        &:focus-visible {
+          color: var(--evening-header-fill);
+          background-size: 100% 100%;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          transition: none;
+        }
+      }
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:focus-visible {
+        outline: 2px solid var(--evening-header-text);
+        outline-offset: var(--evening-header-space);
+      }
+    }
+  }
+}
