@@ -71,9 +71,17 @@
       a {
         color: var(--text-clr);
         text-decoration: none;
+        background:
+          linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
+        transition: background-size var(--duration-medium) ease;
 
-        &:hover {
-          text-decoration: underline;
+        @media (prefers-reduced-motion: reduce) {
+          transition: none;
+        }
+
+        &:hover,
+        &:focus-visible {
+          background-size: 100% 1px;
         }
       }
 

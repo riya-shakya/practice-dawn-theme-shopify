@@ -52,7 +52,7 @@
                 {%- endif -%}
                 {%- if block.settings.link != blank and block.settings.link_label != blank -%}
                   <a class="everyday-ritual__link underlined-link" href="{{ block.settings.link | escape }}">
-                    {{- block.settings.link_label | escape -}}
+                    <span class="everyday-ritual__link-label">{{ block.settings.link_label | escape }}</span>
                     <span aria-hidden="true">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
                   </a>
                 {%- endif -%}

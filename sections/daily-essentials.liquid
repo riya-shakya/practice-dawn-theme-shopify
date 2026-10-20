@@ -61,7 +61,7 @@
               aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: section.settings.collection.title | escape }}"
             {% endif %}
           >
-            {{- 'sections.featured_collection.view_all' | t -}}
+            <span class="daily-essentials__label">{{ 'sections.featured_collection.view_all' | t }}</span>
           </a>
         {%- endif -%}
         {%- if card_count > 1 -%}
@@ -141,7 +141,7 @@
                   <figcaption>
                     {%- if card_label != blank -%}
                       <h3 class="daily-essentials__title">
-                        {{- card_label | escape }}
+                        <span class="daily-essentials__label">{{ card_label | escape }}</span>
                         {%- if mode == 'custom_cards' and card_url != blank -%}
                           <span aria-hidden="true">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
                         {%- endif -%}

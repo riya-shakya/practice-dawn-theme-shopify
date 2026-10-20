@@ -117,6 +117,23 @@
                 align-items: center;
                 gap: var(--grid-mobile-horizontal-spacing);
                 min-height: 44px;
+                text-decoration: none;
+
+                .everyday-ritual__link-label {
+                  background:
+                    linear-gradient(currentColor, currentColor) left bottom / 0 1px
+                    no-repeat;
+                  transition: background-size var(--duration-medium) ease;
+
+                  @media (prefers-reduced-motion: reduce) {
+                    transition: none;
+                  }
+                }
+
+                &:hover .everyday-ritual__link-label,
+                &:focus-visible .everyday-ritual__link-label {
+                  background-size: 100% 1px;
+                }
               }
             }
 
