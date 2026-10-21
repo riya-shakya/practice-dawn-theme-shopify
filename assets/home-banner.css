@@ -37,13 +37,17 @@
 
       .home-banner__image {
         height: 100%;
-        aspect-ratio: var(--home-banner-mobile-ratio);
 
         @media screen and (min-width: 750px) {
-          height: auto;
-          max-height: 100vh;
-          aspect-ratio: var(--home-banner-ratio);
+          max-height: var(--home-banner-max-height);
         }
+      }
+    }
+
+    &.home-banner__media--softer {
+      .home-banner__image {
+        contain: size;
+        object-position: left center;
       }
     }
   }

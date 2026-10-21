@@ -2,12 +2,15 @@
   assign banner_image = section.settings.image | default: section.settings.mobile_image
   assign mobile_image = section.settings.mobile_image
   assign image_sizes = 'calc(100vw - 20px)'
-  if section.settings.layout == 'evening'
+  if section.settings.layout != 'home'
     assign image_sizes = '100vw'
   endif
-  assign image_priority = 'auto'
   if section.index == 1
     assign image_priority = 'high'
+    assign image_loading = 'eager'
+  else
+    assign image_priority = 'auto'
+    assign image_loading = 'lazy'
   endif
 -%}
 
@@ -25,25 +28,32 @@
     --home-banner-card-width: 40%;
     --home-banner-ratio: 16 / 7;
     --home-banner-mobile-ratio: 5 / 4;
+    --home-banner-max-height: none;
     --home-banner-heading-font: Georgia, 'Times New Roman', serif;
     --home-banner-heading-size: clamp(3.2rem, 4vw, 6.4rem);
     --home-banner-body-size: 1.4rem;
-    {% if section.settings.layout == 'evening' %}
+    {% if section.settings.layout != 'home' %}
       --home-banner-margin: 0;
       --home-banner-card: {{ section.settings.color_scheme.settings.background }};
       --home-banner-text: {{ section.settings.color_scheme.settings.text }};
+      --home-banner-body-size: clamp(1.6rem, 2vw, 2.8rem);
+    {% endif %}
+    {% if section.settings.layout == 'evening' %}
+      --home-banner-max-height: 100vh;
       --home-banner-ratio: 16 / 9;
       --home-banner-mobile-ratio: 1 / 1;
       --home-banner-heading-size: clamp(4.8rem, 11vw, 16rem);
-      --home-banner-body-size: clamp(1.6rem, 2vw, 2.8rem);
       @media screen and (min-width: 750px) {
         --home-banner-heading-size: clamp(4.8rem, min(11vw, 18vh), 16rem);
       }
+    {% elsif section.settings.layout == 'softer_landing' %}
+      --home-banner-ratio: 13 / 4;
+      --home-banner-heading-size: clamp(4.8rem, 11vw, 12rem);
     {% endif %}
   }
 </style>
 
-<div class="home-banner__media{% if section.settings.layout == 'evening' %} home-banner__media--evening{% endif %}">
+<div class="home-banner__media{% if section.settings.layout != 'home' %} home-banner__media--evening{% endif %}{% if section.settings.layout == 'softer_landing' %} home-banner__media--softer{% endif %}">
   {%- if banner_image != blank -%}
     <picture>
       {%- if mobile_image != blank and mobile_image != banner_image -%}
@@ -60,7 +70,7 @@
           class: 'home-banner__image',
           widths: '768, 1536, 1920',
           sizes: image_sizes,
-          loading: 'eager',
+          loading: image_loading,
           fetchpriority: image_priority,
           alt: banner_image.alt
       }}
@@ -69,7 +79,7 @@
     {{- 'lifestyle-1' | placeholder_svg_tag: 'home-banner__image' -}}
   {%- endif -%}
 </div>
-<div class="home-banner__card{% if section.settings.layout == 'evening' %} home-banner__card--evening{% endif %}">
+<div class="home-banner__card{% if section.settings.layout != 'home' %} home-banner__card--evening{% endif %}">
   {%- if section.settings.layout == 'evening' and section.settings.eyebrow != blank -%}
     <p class="home-banner__eyebrow">{{ section.settings.eyebrow | escape }}</p>
   {%- endif -%}
@@ -81,7 +91,10 @@
   {%- if section.settings.text != blank -%}
     <p class="home-banner__text">{{ section.settings.text | escape }}</p>
   {%- endif -%}
-  {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+  {%- if section.settings.layout != 'softer_landing'
+    and section.settings.button_label != blank
+    and section.settings.button_link != blank
+  -%}
     <a class="home-banner__button" href="{{ section.settings.button_link }}">
       <span>{{ section.settings.button_label | escape }}</span>
       <span aria-hidden="true">
@@ -102,7 +115,8 @@
       "label": "Layout",
       "options": [
         { "value": "home", "label": "Home" },
-        { "value": "evening", "label": "Evening" }
+        { "value": "evening", "label": "Evening" },
+        { "value": "softer_landing", "label": "Softer landing" }
       ],
       "default": "home"
     },
@@ -117,7 +131,7 @@
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "scheme-4",
-      "visible_if": "{{ section.settings.layout == 'evening' }}"
+      "visible_if": "{{ section.settings.layout != 'home' }}"
     },
     {
       "type": "image_picker",
@@ -146,13 +160,15 @@
       "type": "text",
       "id": "button_label",
       "label": "Button label",
-      "default": "Explore skin care"
+      "default": "Explore skin care",
+      "visible_if": "{{ section.settings.layout != 'softer_landing' }}"
     },
     {
       "type": "url",
       "id": "button_link",
       "label": "Button link",
-      "default": "/collections/all"
+      "default": "/collections/all",
+      "visible_if": "{{ section.settings.layout != 'softer_landing' }}"
     },
     {
       "type": "color",
@@ -182,6 +198,18 @@
         "text": "A simple ritual for the end of the day.",
         "button_label": "Discover the ritual",
         "button_link": "/collections/all",
+        "color_scheme": "scheme-4"
+      }
+    },
+    {
+      "name": "Softer landing",
+      "settings": {
+        "layout": "softer_landing",
+        "eyebrow": "",
+        "heading": "A softer\nlanding.",
+        "text": "Make space for a daily moment of care.",
+        "button_label": "",
+        "button_link": "",
         "color_scheme": "scheme-4"
       }
     }

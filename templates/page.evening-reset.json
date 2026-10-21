@@ -44,11 +44,25 @@
         "button_label": "Explore the cleanser",
         "color_scheme": "scheme-1"
       }
+    },
+    "softer_landing": {
+      "type": "home-banner",
+      "settings": {
+        "layout": "softer_landing",
+        "image": "shopify://shop_images/evening-softer-landing.png",
+        "mobile_image": "shopify://shop_images/evening-softer-landing-mobile.png",
+        "heading": "A softer\nlanding.",
+        "text": "Make space for a daily moment of care.",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "scheme-4"
+      }
     }
   },
   "order": [
     "hero",
     "intro",
-    "cleanser"
+    "cleanser",
+    "softer_landing"
   ]
 }
