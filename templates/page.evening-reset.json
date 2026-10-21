@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "layout": "evening-reset",
   "sections": {
@@ -5,14 +14,14 @@
       "type": "home-banner",
       "settings": {
         "layout": "evening",
+        "eyebrow": "THE EVENING RESET",
+        "color_scheme": "scheme-4",
         "image": "shopify://shop_images/evening-reset-desktop.png",
         "mobile_image": "shopify://shop_images/evening-reset-mobile.png",
-        "eyebrow": "THE EVENING RESET",
         "heading": "Leave the\nday behind.",
         "text": "A simple ritual for the end of the day.",
         "button_label": "Discover the ritual",
-        "button_link": "/collections/skincare",
-        "color_scheme": "scheme-4"
+        "button_link": "/collections/skincare"
       }
     },
     "intro": {
@@ -23,7 +32,23 @@
         "description": "<p>Cleanse. Replenish.<br>Take a moment. Discover a considered routine for your evening.</p>",
         "color_scheme": "scheme-1"
       }
+    },
+    "cleanser": {
+      "type": "image-with-product",
+      "settings": {
+        "image": "shopify://shop_images/evening-cleanse-ritual.png",
+        "background_image": "shopify://shop_images/cleanser-wide-beige.png",
+        "product": "mandarin-gel-cleanser",
+        "eyebrow": "BEGIN SIMPLY",
+        "content": "<p>Start with<br>a clean slate.</p><p>Meet Mandarin Gel Cleanser:<br>the first step in your evening routine.</p>",
+        "button_label": "Explore the cleanser",
+        "color_scheme": "scheme-1"
+      }
     }
   },
-  "order": ["hero", "intro"]
+  "order": [
+    "hero",
+    "intro",
+    "cleanser"
+  ]
 }
