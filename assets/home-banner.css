@@ -143,5 +143,23 @@
         padding: min(var(--home-banner-inset), 4vh) 5rem;
       }
     }
+
+    &.home-banner__card--hero {
+      @media screen and (max-width: 749px) {
+        place-self: center start;
+      }
+
+      .home-banner__text {
+        @media screen and (max-width: 749px) {
+          max-width: 75%;
+        }
+      }
+
+      .home-banner__button {
+        @media screen and (max-width: 749px) {
+          gap: var(--home-banner-space);
+        }
+      }
+    }
   }
 }

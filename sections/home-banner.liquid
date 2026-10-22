@@ -41,7 +41,7 @@
     {% if section.settings.layout == 'evening' %}
       --home-banner-max-height: 100vh;
       --home-banner-ratio: 16 / 9;
-      --home-banner-mobile-ratio: 1 / 1;
+      --home-banner-mobile-ratio: 3 / 4;
       --home-banner-heading-size: clamp(4.8rem, 11vw, 16rem);
       @media screen and (min-width: 750px) {
         --home-banner-heading-size: clamp(4.8rem, min(11vw, 18vh), 16rem);
@@ -79,7 +79,7 @@
     {{- 'lifestyle-1' | placeholder_svg_tag: 'home-banner__image' -}}
   {%- endif -%}
 </div>
-<div class="home-banner__card{% if section.settings.layout != 'home' %} home-banner__card--evening{% endif %}">
+<div class="home-banner__card{% if section.settings.layout != 'home' %} home-banner__card--evening{% endif %}{% if section.settings.layout == 'evening' %} home-banner__card--hero{% endif %}">
   {%- if section.settings.layout == 'evening' and section.settings.eyebrow != blank -%}
     <p class="home-banner__eyebrow">{{ section.settings.eyebrow | escape }}</p>
   {%- endif -%}

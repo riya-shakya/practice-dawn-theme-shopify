@@ -30,7 +30,7 @@
         "label": "A SLOWER MOMENT",
         "heading": "Less to do.\nMore time for you.",
         "description": "<p>Cleanse. Replenish.<br>Take a moment. Discover a considered routine for your evening.</p>",
-        "color_scheme": "scheme-1"
+        "color_scheme": "evening-cream"
       }
     },
     "cleanser": {
@@ -42,7 +42,7 @@
         "eyebrow": "BEGIN SIMPLY",
         "content": "<p>Start with<br>a clean slate.</p><p>Meet Mandarin Gel Cleanser:<br>the first step in your evening routine.</p>",
         "button_label": "Explore the cleanser",
-        "color_scheme": "scheme-1"
+        "color_scheme": "evening-cream"
       }
     },
     "softer_landing": {
@@ -63,7 +63,7 @@
       "settings": {
         "label": "YOUR NEXT STEP",
         "heading": "One essential.\nOr a whole ritual.",
-        "color_scheme": "scheme-1"
+        "color_scheme": "evening-cream"
       },
       "blocks": {
         "cleanser": {
