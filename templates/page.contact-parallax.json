@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "hero": {
+      "type": "home-banner",
+      "settings": {
+        "layout": "contact",
+        "eyebrow": "A CONVERSATION, CONSIDERED",
+        "heading": "Good conversations\nbegin here.",
+        "text": "For a little guidance, a question, or simply a word. We’re listening.",
+        "button_label": "Get in touch",
+        "button_link": "/pages/contact#ContactForm",
+        "contact_label": "CONTACT US",
+        "color_scheme": "evening-olive",
+        "image": "shopify://shop_images/contact-parallax.png"
+      }
+    }
+  },
+  "order": ["hero"]
+}

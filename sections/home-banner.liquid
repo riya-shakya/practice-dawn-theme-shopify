@@ -49,39 +49,63 @@
     {% elsif section.settings.layout == 'softer_landing' %}
       --home-banner-ratio: 13 / 4;
       --home-banner-heading-size: clamp(4.8rem, 11vw, 12rem);
+    {% elsif section.settings.layout == 'contact' %}
+      --home-banner-gap: calc(3 * var(--home-banner-space));
+      --home-banner-heading-size: clamp(4.6rem, 8vw, 10.6rem);
+      --home-banner-body-size: 1.5rem;
     {% endif %}
   }
+  {% if section.settings.layout == 'contact' %}
+    .contact-page__background {
+      --contact-page-shade: color-mix(in srgb, {{ section.settings.color_scheme.settings.background }} 40%, transparent);
+      {% if banner_image != blank %}
+        --contact-page-image: url({{ mobile_image | default: banner_image | image_url: width: 768 }});
+        @media screen and (min-width: 750px) {
+          --contact-page-image: url({{ banner_image | image_url: width: 1536 }});
+        }
+      {% else %}
+        --contact-page-image: none;
+      {% endif %}
+    }
+  {% endif %}
 </style>
 
-<div class="home-banner__media{% if section.settings.layout != 'home' %} home-banner__media--evening{% endif %}{% if section.settings.layout == 'softer_landing' %} home-banner__media--softer{% endif %}">
-  {%- if banner_image != blank -%}
-    <picture>
-      {%- if mobile_image != blank and mobile_image != banner_image -%}
-        <source
-          media="(max-width: 749px)"
-          srcset="{{ mobile_image | image_url: width: 768 }} 768w, {{ mobile_image | image_url: width: 1086 }} 1086w"
-          sizes="{{ image_sizes }}"
-        >
-      {%- endif -%}
-      {{
-        banner_image
-        | image_url: width: 1920
-        | image_tag:
-          class: 'home-banner__image',
-          widths: '768, 1536, 1920',
-          sizes: image_sizes,
-          loading: image_loading,
-          fetchpriority: image_priority,
-          alt: banner_image.alt
-      }}
-    </picture>
-  {%- else -%}
-    {{- 'lifestyle-1' | placeholder_svg_tag: 'home-banner__image' -}}
-  {%- endif -%}
-</div>
-<div class="home-banner__card{% if section.settings.layout != 'home' %} home-banner__card--evening{% endif %}{% if section.settings.layout == 'evening' %} home-banner__card--hero{% endif %}">
-  {%- if section.settings.layout == 'evening' and section.settings.eyebrow != blank -%}
-    <p class="home-banner__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+{%- if section.settings.layout == 'contact' -%}
+  <contact-background hidden></contact-background>
+  <script src="{{ 'contact-background.js' | asset_url }}" defer></script>
+{%- else -%}
+  <div class="home-banner__media{% if section.settings.layout != 'home' %} home-banner__media--evening{% endif %}{% if section.settings.layout == 'softer_landing' %} home-banner__media--softer{% endif %}">
+    {%- if banner_image != blank -%}
+      <picture>
+        {%- if mobile_image != blank and mobile_image != banner_image -%}
+          <source
+            media="(max-width: 749px)"
+            srcset="{{ mobile_image | image_url: width: 768 }} 768w, {{ mobile_image | image_url: width: 1086 }} 1086w"
+            sizes="{{ image_sizes }}"
+          >
+        {%- endif -%}
+        {{
+          banner_image
+          | image_url: width: 1920
+          | image_tag:
+            class: 'home-banner__image',
+            widths: '768, 1536, 1920',
+            sizes: image_sizes,
+            loading: image_loading,
+            fetchpriority: image_priority,
+            alt: banner_image.alt
+        }}
+      </picture>
+    {%- else -%}
+      {{- 'lifestyle-1' | placeholder_svg_tag: 'home-banner__image' -}}
+    {%- endif -%}
+  </div>
+{%- endif -%}
+<div class="home-banner__card{% if section.settings.layout != 'home' %} home-banner__card--evening{% endif %}{% if section.settings.layout == 'evening' %} home-banner__card--hero{% elsif section.settings.layout == 'contact' %} home-banner__card--contact{% endif %}">
+  {%- if section.settings.layout == 'evening' or section.settings.layout == 'contact' -%}
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="home-banner__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    {%- endif -%}
   {%- endif -%}
   {%- if section.settings.heading != blank -%}
     <h1 id="HomeBannerHeading-{{ section.id }}" class="home-banner__heading">
@@ -103,6 +127,9 @@
     </a>
   {%- endif -%}
 </div>
+{%- if section.settings.layout == 'contact' and section.settings.contact_label != blank -%}
+  <p class="home-banner__contact-label">{{ section.settings.contact_label | escape }}</p>
+{%- endif -%}
 
 {% schema %}
 {
@@ -116,7 +143,8 @@
       "options": [
         { "value": "home", "label": "Home" },
         { "value": "evening", "label": "Evening" },
-        { "value": "softer_landing", "label": "Softer landing" }
+        { "value": "softer_landing", "label": "Softer landing" },
+        { "value": "contact", "label": "Contact" }
       ],
       "default": "home"
     },
@@ -124,7 +152,14 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow",
-      "visible_if": "{{ section.settings.layout == 'evening' }}"
+      "visible_if": "{{ section.settings.layout == 'evening' or section.settings.layout == 'contact' }}"
+    },
+    {
+      "type": "text",
+      "id": "contact_label",
+      "label": "Bottom label",
+      "default": "CONTACT US",
+      "visible_if": "{{ section.settings.layout == 'contact' }}"
     },
     {
       "type": "color_scheme",
@@ -211,6 +246,18 @@
         "button_label": "",
         "button_link": "",
         "color_scheme": "scheme-4"
+      }
+    },
+    {
+      "name": "Contact banner",
+      "settings": {
+        "layout": "contact",
+        "eyebrow": "A CONVERSATION, CONSIDERED",
+        "heading": "Good conversations\nbegin here.",
+        "text": "For a little guidance, a question, or simply a word. We’re listening.",
+        "button_label": "Get in touch",
+        "button_link": "/pages/contact#ContactForm",
+        "color_scheme": "evening-olive"
       }
     }
   ]

@@ -161,5 +161,83 @@
         }
       }
     }
+
+    &.home-banner__card--contact {
+      align-content: center;
+      min-height: 78svh;
+      width: 100%;
+      padding-block: calc(2 * var(--home-banner-inset));
+      font-family: var(--font-body-family);
+
+      .home-banner__heading {
+        letter-spacing: -0.045em;
+      }
+
+      .home-banner__eyebrow {
+        font-size: 1rem;
+        letter-spacing: 0.16em;
+      }
+
+      .home-banner__text {
+        max-width: 35ch;
+      }
+
+      .home-banner__button {
+        border: 0;
+        padding-inline: 0;
+        font-size: 1.3rem;
+        background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
+
+        &:hover,
+        &:focus-visible {
+          color: inherit;
+          background-size: 100% 1px;
+        }
+
+        svg {
+          rotate: 90deg;
+        }
+      }
+    }
+  }
+
+  .home-banner__contact-label {
+    grid-area: 1 / 1;
+    align-self: end;
+    margin: var(--home-banner-gap) 1.5rem;
+    border-top: 1px solid currentColor;
+    padding-top: var(--home-banner-gap);
+    font-size: 1rem;
+    letter-spacing: 0.12em;
+
+    @media screen and (min-width: 750px) {
+      margin-inline: 5rem;
+    }
+  }
+}
+
+.contact-page__background {
+  background-image:
+    linear-gradient(var(--contact-page-shade), var(--contact-page-shade)),
+    var(--contact-page-image);
+  background-position: 62% center;
+  background-size: cover;
+
+  @media (prefers-reduced-motion: no-preference) {
+    background-attachment: fixed;
+  }
+
+  &.contact-page__background--fallback {
+    clip-path: inset(0);
+
+    &::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: inherit;
+      background-attachment: scroll;
+      pointer-events: none;
+    }
   }
 }
