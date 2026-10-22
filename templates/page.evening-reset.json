@@ -57,12 +57,46 @@
         "button_link": "",
         "color_scheme": "scheme-4"
       }
+    },
+    "next_step": {
+      "type": "next-step",
+      "settings": {
+        "label": "YOUR NEXT STEP",
+        "heading": "One essential.\nOr a whole ritual.",
+        "color_scheme": "scheme-1"
+      },
+      "blocks": {
+        "cleanser": {
+          "type": "card",
+          "settings": {
+            "label": "BEGIN SIMPLY",
+            "heading": "Meet the cleanser.",
+            "text": "A gentle, effective cleanse to end the day, and set the tone for what comes next.",
+            "image": "shopify://shop_images/evening-next-step-cleanser.png",
+            "link": "/products/mandarin-gel-cleanser",
+            "button_label": "View product"
+          }
+        },
+        "collection": {
+          "type": "card",
+          "settings": {
+            "label": "BUILD YOUR RITUAL",
+            "heading": "Explore skin care.",
+            "text": "A complete collection for your evening ritual, with considered formulations and sensorial textures.",
+            "image": "shopify://shop_images/evening-next-step-collection.png",
+            "link": "/collections/skincare",
+            "button_label": "Shop the collection"
+          }
+        }
+      },
+      "block_order": ["cleanser", "collection"]
     }
   },
   "order": [
     "hero",
     "intro",
     "cleanser",
-    "softer_landing"
+    "softer_landing",
+    "next_step"
   ]
 }
