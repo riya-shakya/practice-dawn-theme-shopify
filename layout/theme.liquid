@@ -334,12 +334,19 @@
 
     <main
       id="MainContent"
-      class="content-for-layout focus-none{% if template.suffix == 'contact-parallax' %} contact-page__background{% endif %}"
+      class="content-for-layout focus-none"
       role="main"
       tabindex="-1"
       data-template="{{ template.name }}"
     >
-      {{ content_for_layout }}
+      {%- if template.suffix == 'contact-parallax' -%}
+        <contact-background class="contact-page__background">
+          {{ content_for_layout }}
+        </contact-background>
+        <script src="{{ 'contact-background.js' | asset_url }}" defer></script>
+      {%- else -%}
+        {{ content_for_layout }}
+      {%- endif -%}
     </main>
 
     {% sections 'footer-group' %}

@@ -217,6 +217,7 @@
 }
 
 .contact-page__background {
+  display: block;
   background-image:
     linear-gradient(var(--contact-page-shade), var(--contact-page-shade)),
     var(--contact-page-image);

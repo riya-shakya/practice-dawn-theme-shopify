@@ -70,10 +70,7 @@
   {% endif %}
 </style>
 
-{%- if section.settings.layout == 'contact' -%}
-  <contact-background hidden></contact-background>
-  <script src="{{ 'contact-background.js' | asset_url }}" defer></script>
-{%- else -%}
+{%- if section.settings.layout != 'contact' -%}
   <div class="home-banner__media{% if section.settings.layout != 'home' %} home-banner__media--evening{% endif %}{% if section.settings.layout == 'softer_landing' %} home-banner__media--softer{% endif %}">
     {%- if banner_image != blank -%}
       <picture>
