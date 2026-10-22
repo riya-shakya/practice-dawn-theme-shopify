@@ -86,14 +86,13 @@
       display: inline-flex;
       align-items: center;
       justify-self: start;
-      gap: var(--home-banner-gap);
+      gap: var(--home-banner-space);
       min-height: 44px;
       padding: var(--home-banner-space) var(--home-banner-gap);
       border: 1px solid currentColor;
       color: inherit;
       text-decoration: none;
-      background:
-        linear-gradient(var(--home-banner-text), var(--home-banner-text)) left / 0 100%
+      background: linear-gradient(var(--home-banner-text), var(--home-banner-text)) left / 0 100%
         no-repeat;
       transition:
         background-size var(--duration-medium) ease,
@@ -154,12 +153,6 @@
           max-width: 75%;
         }
       }
-
-      .home-banner__button {
-        @media screen and (max-width: 749px) {
-          gap: var(--home-banner-space);
-        }
-      }
     }
 
     &.home-banner__card--contact {
@@ -195,7 +188,22 @@
         }
 
         svg {
-          rotate: 90deg;
+          rotate: var(--home-banner-arrow-rotation);
+        }
+      }
+    }
+
+    &.home-banner__card--closing {
+      gap: var(--home-banner-gap);
+      min-height: 43rem;
+
+      @media screen and (min-width: 750px) {
+        min-height: 53rem;
+      }
+
+      .home-banner__heading {
+        em {
+          display: block;
         }
       }
     }
@@ -219,8 +227,7 @@
 .contact-page__background {
   display: block;
   background-image:
-    linear-gradient(var(--contact-page-shade), var(--contact-page-shade)),
-    var(--contact-page-image);
+    linear-gradient(var(--contact-page-shade), var(--contact-page-shade)), var(--contact-page-image);
   background-position: 62% center;
   background-size: cover;
 

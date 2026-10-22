@@ -10,6 +10,7 @@
   padding: 2rem;
 
   h3 {
+    color: inherit;
     font-weight: 700;
     opacity: 0.6;
   }
@@ -28,9 +29,18 @@
         width: 100%;
         border: none;
         border-bottom: 1px solid var(--grey-clr);
-        background: var(--bg-clr);
+        background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat
+          var(--bg-clr);
+        color: inherit;
+        transition: background-size var(--duration-medium) ease;
+
+        @media (prefers-reduced-motion: reduce) {
+          transition: none;
+        }
 
         &::placeholder {
+          color: inherit;
+          opacity: 1;
           font-size: 18px;
           font-weight: 500;
         }
@@ -38,6 +48,7 @@
         &:focus-visible {
           outline: none;
           box-shadow: none;
+          background-size: 100% 1px;
         }
       }
 
@@ -45,7 +56,12 @@
         border: none;
         background: inherit;
         margin-left: -25px;
-        color: var(--grey-clr);
+        color: inherit;
+
+        svg {
+          width: 20px;
+          height: 20px;
+        }
       }
     }
   }
@@ -71,8 +87,7 @@
       a {
         color: var(--text-clr);
         text-decoration: none;
-        background:
-          linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
+        background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
         transition: background-size var(--duration-medium) ease;
 
         @media (prefers-reduced-motion: reduce) {
@@ -102,9 +117,4 @@
   @media only screen and (min-width: 1024px) {
     flex-direction: row;
   }
-}
-
-.subscribe > button svg {
-  width: 20px;
-  height: 20px;
 }

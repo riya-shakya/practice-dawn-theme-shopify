@@ -43,7 +43,19 @@
         }
       },
       "block_order": ["guidance", "order", "other"]
+    },
+    "closing": {
+      "type": "home-banner",
+      "settings": {
+        "layout": "contact_closing",
+        "eyebrow": "THOUGHTFUL CARE, ALWAYS",
+        "closing_heading": "A moment, <em>for conversation.</em>",
+        "text": "",
+        "button_label": "Explore skin care",
+        "button_link": "/collections/all",
+        "color_scheme": "evening-olive"
+      }
     }
   },
-  "order": ["hero", "conversation"]
+  "order": ["hero", "conversation", "closing"]
 }
