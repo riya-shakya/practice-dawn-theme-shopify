@@ -8,12 +8,42 @@
         "heading": "Good conversations\nbegin here.",
         "text": "For a little guidance, a question, or simply a word. We’re listening.",
         "button_label": "Get in touch",
-        "button_link": "/pages/contact#ContactForm",
+        "button_link": "#contact",
         "contact_label": "CONTACT US",
         "color_scheme": "evening-olive",
         "image": "shopify://shop_images/contact-parallax.png"
       }
+    },
+    "conversation": {
+      "type": "contact-conversation",
+      "settings": {
+        "color_scheme": "evening-cream"
+      },
+      "blocks": {
+        "guidance": {
+          "type": "topic",
+          "settings": {
+            "title": "Product guidance",
+            "text": "Finding your everyday essentials."
+          }
+        },
+        "order": {
+          "type": "topic",
+          "settings": {
+            "title": "Your order",
+            "text": "A question about your purchase."
+          }
+        },
+        "other": {
+          "type": "topic",
+          "settings": {
+            "title": "Something else",
+            "text": "There’s always room for a conversation."
+          }
+        }
+      },
+      "block_order": ["guidance", "order", "other"]
     }
   },
-  "order": ["hero"]
+  "order": ["hero", "conversation"]
 }
