@@ -1,0 +1,102 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "evening-reset",
+  "sections": {
+    "hero": {
+      "type": "home-banner",
+      "settings": {
+        "layout": "evening",
+        "eyebrow": "THE EVENING RESET",
+        "color_scheme": "scheme-4",
+        "image": "shopify://shop_images/evening-reset-desktop.png",
+        "mobile_image": "shopify://shop_images/evening-reset-mobile.png",
+        "heading": "Leave the\nday behind.",
+        "text": "A simple ritual for the end of the day.",
+        "button_label": "Discover the ritual",
+        "button_link": "/collections/skincare"
+      }
+    },
+    "intro": {
+      "type": "slower-moment",
+      "settings": {
+        "label": "A SLOWER MOMENT",
+        "heading": "Less to do.\nMore time for you.",
+        "description": "<p>Cleanse. Replenish.<br>Take a moment. Discover a considered routine for your evening.</p>",
+        "color_scheme": "evening-cream"
+      }
+    },
+    "cleanser": {
+      "type": "image-with-product",
+      "settings": {
+        "image": "shopify://shop_images/evening-cleanse-ritual.png",
+        "background_image": "shopify://shop_images/cleanser-wide-beige.png",
+        "product": "mandarin-gel-cleanser",
+        "eyebrow": "BEGIN SIMPLY",
+        "content": "<p>Start with<br>a clean slate.</p><p>Meet Mandarin Gel Cleanser:<br>the first step in your evening routine.</p>",
+        "button_label": "Explore the cleanser",
+        "color_scheme": "evening-cream"
+      }
+    },
+    "softer_landing": {
+      "type": "home-banner",
+      "settings": {
+        "layout": "softer_landing",
+        "image": "shopify://shop_images/evening-softer-landing.png",
+        "mobile_image": "shopify://shop_images/evening-softer-landing-mobile.png",
+        "heading": "A softer\nlanding.",
+        "text": "Make space for a daily moment of care.",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "scheme-4"
+      }
+    },
+    "next_step": {
+      "type": "next-step",
+      "settings": {
+        "label": "YOUR NEXT STEP",
+        "heading": "One essential.\nOr a whole ritual.",
+        "color_scheme": "evening-cream"
+      },
+      "blocks": {
+        "cleanser": {
+          "type": "card",
+          "settings": {
+            "label": "BEGIN SIMPLY",
+            "heading": "Meet the cleanser.",
+            "text": "A gentle, effective cleanse to end the day, and set the tone for what comes next.",
+            "image": "shopify://shop_images/evening-next-step-cleanser.png",
+            "link": "/products/mandarin-gel-cleanser",
+            "button_label": "View product"
+          }
+        },
+        "collection": {
+          "type": "card",
+          "settings": {
+            "label": "BUILD YOUR RITUAL",
+            "heading": "Explore skin care.",
+            "text": "A complete collection for your evening ritual, with considered formulations and sensorial textures.",
+            "image": "shopify://shop_images/evening-next-step-collection.png",
+            "link": "/collections/skincare",
+            "button_label": "Shop the collection"
+          }
+        }
+      },
+      "block_order": ["cleanser", "collection"]
+    }
+  },
+  "order": [
+    "hero",
+    "intro",
+    "cleanser",
+    "softer_landing",
+    "next_step"
+  ]
+}

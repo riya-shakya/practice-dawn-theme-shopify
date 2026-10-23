@@ -1,0 +1,61 @@
+{
+  "sections": {
+    "hero": {
+      "type": "home-banner",
+      "settings": {
+        "layout": "contact",
+        "eyebrow": "A CONVERSATION, CONSIDERED",
+        "heading": "Good conversations\nbegin here.",
+        "text": "For a little guidance, a question, or simply a word. We’re listening.",
+        "button_label": "Get in touch",
+        "button_link": "#contact",
+        "contact_label": "CONTACT US",
+        "color_scheme": "evening-olive",
+        "image": "shopify://shop_images/contact-parallax.png"
+      }
+    },
+    "conversation": {
+      "type": "contact-conversation",
+      "settings": {
+        "color_scheme": "evening-cream"
+      },
+      "blocks": {
+        "guidance": {
+          "type": "topic",
+          "settings": {
+            "title": "Product guidance",
+            "text": "Finding your everyday essentials."
+          }
+        },
+        "order": {
+          "type": "topic",
+          "settings": {
+            "title": "Your order",
+            "text": "A question about your purchase."
+          }
+        },
+        "other": {
+          "type": "topic",
+          "settings": {
+            "title": "Something else",
+            "text": "There’s always room for a conversation."
+          }
+        }
+      },
+      "block_order": ["guidance", "order", "other"]
+    },
+    "closing": {
+      "type": "home-banner",
+      "settings": {
+        "layout": "contact_closing",
+        "eyebrow": "THOUGHTFUL CARE, ALWAYS",
+        "closing_heading": "A moment, <em>for conversation.</em>",
+        "text": "",
+        "button_label": "Explore skin care",
+        "button_link": "/collections/all",
+        "color_scheme": "evening-olive"
+      }
+    }
+  },
+  "order": ["hero", "conversation", "closing"]
+}

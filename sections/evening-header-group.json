@@ -1,0 +1,16 @@
+{
+  "type": "header",
+  "name": "Evening header",
+  "sections": {
+    "header": {
+      "type": "evening-header",
+      "settings": {
+        "campaign_label": "01 / THE EVENING RESET",
+        "button_label": "Explore skin care",
+        "button_link": "/collections/skincare",
+        "color_scheme": "scheme-4"
+      }
+    }
+  },
+  "order": ["header"]
+}

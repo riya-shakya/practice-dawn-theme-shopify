@@ -8,6 +8,25 @@ custom-header.header {
   align-items: center;
   padding: 15px;
   background-color: var(--bg-clr);
+
+  .menu__links {
+    a {
+      color: var(--text-clr);
+      text-decoration: none;
+      background:
+        linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
+      transition: background-size var(--duration-medium) ease;
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
+
+      &:hover,
+      &:focus-visible {
+        background-size: 100% 1px;
+      }
+    }
+  }
 }
 
 custom-header.header > * {
@@ -29,11 +48,6 @@ custom-header.header > * {
   padding: 0;
   margin: 0;
 }
-.menu__links a {
-  text-decoration: none;
-  color: var(--text-clr);
-}
-
 .menu__logo-container {
   display: grid;
   min-width: 0;

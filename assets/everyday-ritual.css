@@ -1,0 +1,149 @@
+.everyday-ritual {
+  .everyday-ritual__layout {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-desktop-horizontal-spacing);
+    margin-inline: var(--grid-desktop-horizontal-spacing);
+
+    @media screen and (min-width: 990px) {
+      flex-direction: row;
+      gap: 0;
+    }
+
+    .everyday-ritual__image,
+    .everyday-ritual__thumbnail {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .everyday-ritual__image {
+      aspect-ratio: 2 / 1;
+      align-self: flex-start;
+
+      @media screen and (min-width: 990px) {
+        width: 50%;
+        aspect-ratio: 3 / 2;
+      }
+    }
+
+    .everyday-ritual__content {
+      min-width: 0;
+      width: 100%;
+      padding-block: calc(3 * var(--grid-desktop-horizontal-spacing));
+
+      @media screen and (min-width: 990px) {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        font-size: calc(1.4rem * var(--font-body-scale));
+      }
+
+      .everyday-ritual__heading,
+      .everyday-ritual__title {
+        margin: 0;
+        font-family: var(--everyday-ritual-heading-font);
+        letter-spacing: normal;
+      }
+
+      .everyday-ritual__thumbnail,
+      .everyday-ritual__title {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .everyday-ritual__heading {
+        margin-block-end: var(--grid-desktop-horizontal-spacing);
+        font-size: var(--everyday-ritual-heading-size);
+      }
+
+      .everyday-ritual__steps {
+        border-block-start: 1px solid rgba(var(--color-foreground), 0.3);
+
+        @media screen and (min-width: 990px) {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+        }
+
+        .everyday-ritual__step {
+          border-block-end: 1px solid rgba(var(--color-foreground), 0.3);
+
+          &[open] {
+            @media screen and (min-width: 990px) {
+              flex: 1;
+            }
+          }
+
+          &[open] .everyday-ritual__toggle .icon-plus,
+          &:not([open]) .everyday-ritual__toggle .icon-minus {
+            display: none;
+          }
+
+          .everyday-ritual__summary,
+          .everyday-ritual__body {
+            display: flex;
+            gap: var(--grid-desktop-horizontal-spacing);
+          }
+
+          .everyday-ritual__summary {
+            align-items: center;
+            min-height: 44px;
+            padding-block: var(--grid-mobile-horizontal-spacing);
+
+            & > span:first-child {
+              flex: 0 0 2ch;
+            }
+
+            .everyday-ritual__toggle {
+              svg {
+                display: block;
+                width: 1rem;
+                height: auto;
+              }
+            }
+          }
+
+          .everyday-ritual__body {
+            padding-block-end: var(--grid-desktop-horizontal-spacing);
+            padding-inline-start: calc(2ch + var(--grid-desktop-horizontal-spacing));
+
+            & > div {
+              flex: 2;
+              min-width: 0;
+
+              .everyday-ritual__link {
+                display: inline-flex;
+                align-items: center;
+                gap: var(--grid-mobile-horizontal-spacing);
+                min-height: 44px;
+                text-decoration: none;
+
+                .everyday-ritual__link-label {
+                  background:
+                    linear-gradient(currentColor, currentColor) left bottom / 0 1px
+                    no-repeat;
+                  transition: background-size var(--duration-medium) ease;
+
+                  @media (prefers-reduced-motion: reduce) {
+                    transition: none;
+                  }
+                }
+
+                &:hover .everyday-ritual__link-label,
+                &:focus-visible .everyday-ritual__link-label {
+                  background-size: 100% 1px;
+                }
+              }
+            }
+
+            .everyday-ritual__thumbnail {
+              aspect-ratio: 1 / 1;
+              align-self: flex-end;
+            }
+          }
+        }
+      }
+    }
+  }
+}

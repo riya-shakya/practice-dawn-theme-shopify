@@ -1,84 +1,93 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "home_banner": {
+      "type": "home-banner",
+      "settings": {
+        "image": "shopify://shop_images/home-banner-generated.png",
+        "heading": "A little care.\nEvery day.",
+        "text": "Considered formulations for daily rituals.",
+        "button_label": "Explore skin care",
+        "button_link": "shopify://collections/skincare",
+        "card_color": "#F0EDE4",
+        "text_color": "#272822"
+      }
+    },
+    "daily_essentials": {
+      "type": "daily-essentials",
+      "settings": {
+        "mode": "collection",
+        "eyebrow": "The daily essentials",
+        "heading": "Good habits begin here.",
+        "collection": "skincare",
+        "products_to_show": 5,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "everyday_ritual": {
+      "type": "everyday-ritual",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "cleanse": {
+          "type": "step",
           "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
+            "title": "Cleanse",
+            "description": "<p>A gentle, effective cleanse to refresh the skin and prepare for what's next.</p>",
+            "link_label": "Explore cleansers"
           }
         },
-        "button": {
-          "type": "buttons",
+        "balance": {
+          "type": "step",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "title": "Balance",
+            "description": "<p>Refresh and balance your skin after cleansing.</p>",
+            "link_label": "Explore toners"
+          }
+        },
+        "hydrate": {
+          "type": "step",
+          "settings": {
+            "title": "Hydrate",
+            "description": "<p>Complete your daily ritual with lasting hydration.</p>",
+            "link_label": "Explore moisturisers"
           }
         }
       },
-      "block_order": [
-        "heading",
-        "button"
-      ],
+      "block_order": ["cleanse", "balance", "hydrate"],
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "image": "shopify://shop_images/everyday-ritual.png",
+        "heading": "Find your everyday ritual.",
+        "color_scheme": "scheme-1"
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "care_personal": {
+      "type": "daily-essentials",
+      "blocks": {
+        "dry_skin": {
+          "type": "card",
+          "settings": {
+            "title": "For dry skin"
+          }
+        },
+        "dull_skin": {
+          "type": "card",
+          "settings": {
+            "title": "For dull skin"
+          }
+        },
+        "everyday_balance": {
+          "type": "card",
+          "settings": {
+            "title": "For everyday balance"
+          }
+        }
+      },
+      "block_order": ["dry_skin", "dull_skin", "everyday_balance"],
       "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
+        "mode": "custom_cards",
+        "eyebrow": "Skin concern",
+        "heading": "Care, made personal.",
+        "color_scheme": "scheme-1"
       }
     }
   },
-  "order": [
-    "image_banner",
-    "featured_collection"
-  ]
+  "order": ["home_banner", "daily_essentials", "everyday_ritual", "care_personal"]
 }

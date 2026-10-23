@@ -1,0 +1,106 @@
+{{ 'image-with-product.css' | asset_url | stylesheet_tag }}
+
+{%- assign first_available_variant = section.settings.product.first_available_variant -%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --image-with-product-background: {{ section.settings.color_scheme.settings.background }};
+    --image-with-product-text: {{ section.settings.color_scheme.settings.text }};
+    --image-with-product-font: Georgia, 'Times New Roman', serif;
+    --image-with-product-space: max(var(--grid-desktop-horizontal-spacing), 1rem);
+  }
+</style>
+
+<div class="image-with-product__layout">
+  {%- if section.settings.image != blank -%}
+    {{
+      section.settings.image
+      | image_url: width: 1254
+      | image_tag:
+        class: 'image-with-product__image',
+        widths: '768, 1254',
+        sizes: '(min-width: 750px) 50vw, 100vw',
+        loading: 'lazy'
+    }}
+  {%- else -%}
+    {{ 'lifestyle-1' | placeholder_svg_tag: 'image-with-product__image' }}
+  {%- endif -%}
+  <div class="image-with-product__panel">
+    {%- if section.settings.background_image != blank -%}
+      {{
+        section.settings.background_image
+        | image_url: width: 2172
+        | image_tag:
+          class: 'image-with-product__panel-image',
+          widths: '1254, 2172',
+          sizes: '(min-width: 750px) 50vw, 100vw',
+          loading: 'lazy',
+          alt: ''
+      }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'image-with-product__panel-image' }}
+    {%- endif -%}
+    <div class="image-with-product__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="image-with-product__eyebrow">
+          {{- section.settings.eyebrow | escape -}}
+          <hr>
+        </div>
+      {%- endif -%}
+      {%- if section.settings.content != blank -%}
+        {{ section.settings.content | replace_first: '<p>', '<h2>' | replace_first: '</p>', '</h2>' }}
+      {%- endif -%}
+      {%- if section.settings.product != blank -%}
+        <hr>
+        <p class="image-with-product__title">
+          {{- section.settings.product.title | escape -}}
+          {%- if first_available_variant != blank and section.settings.product.has_only_default_variant == false %}
+            &middot; {{ first_available_variant.title | escape }}
+          {%- endif -%}
+        </p>
+        {%- if section.settings.button_label != blank -%}
+          <a
+            class="image-with-product__button"
+            href="{{ first_available_variant.url | default: section.settings.product.url | escape }}"
+          >
+            {{- section.settings.button_label | escape -}}
+            <span aria-hidden="true">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+          </a>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image with product",
+  "class": "image-with-product",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Lifestyle image" },
+    { "type": "image_picker", "id": "background_image", "label": "Product image" },
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "BEGIN SIMPLY" },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Heading and description",
+      "info": "The first paragraph is the heading. Remaining paragraphs form the description.",
+      "default": "<p>Start with<br>a clean slate.</p><p>Meet Gentle Facial Cleanser:<br>the first step in your evening routine.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Explore the cleanser"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [{ "name": "Image with product" }]
+}
+{% endschema %}

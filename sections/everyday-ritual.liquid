@@ -1,0 +1,169 @@
+{{ 'everyday-ritual.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --everyday-ritual-heading-size: clamp(2.4rem, 3vw, 4.8rem);
+    --everyday-ritual-heading-font: Georgia, 'Times New Roman', serif;
+  }
+</style>
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="everyday-ritual__layout">
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 1536
+        | image_tag:
+          class: 'everyday-ritual__image',
+          widths: '768, 1536',
+          sizes: '(min-width: 990px) 50vw, 100vw',
+          loading: 'lazy'
+      }}
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'everyday-ritual__image placeholder' }}
+    {%- endif -%}
+    <div class="everyday-ritual__content page-width">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="everyday-ritual__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      <div class="everyday-ritual__steps">
+        {%- assign fallback_title = 'accessibility.collapsible_content_title' | t -%}
+        {%- for block in section.blocks -%}
+          <details
+            class="everyday-ritual__step"
+            name="Ritual-{{ section.id }}"
+            {% if forloop.first %}
+              open
+            {% endif %}
+            {{ block.shopify_attributes }}
+          >
+            <summary class="everyday-ritual__summary">
+              <span aria-hidden="true">{{ forloop.index | prepend: '0' }}</span>
+              <h3 class="everyday-ritual__title">{{ block.settings.title | default: fallback_title | escape }}</h3>
+              <span class="everyday-ritual__toggle" aria-hidden="true">
+                {{- 'icon-plus.svg' | inline_asset_content -}}
+                {{- 'icon-minus.svg' | inline_asset_content -}}
+              </span>
+            </summary>
+            <div class="everyday-ritual__body">
+              <div>
+                {%- if block.settings.description != blank -%}
+                  <div class="rte">{{ block.settings.description }}</div>
+                {%- endif -%}
+                {%- if block.settings.link != blank and block.settings.link_label != blank -%}
+                  <a class="everyday-ritual__link underlined-link" href="{{ block.settings.link | escape }}">
+                    <span class="everyday-ritual__link-label">{{ block.settings.link_label | escape }}</span>
+                    <span aria-hidden="true">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+                  </a>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 384
+                  | image_tag:
+                    class: 'everyday-ritual__thumbnail',
+                    widths: '192, 384',
+                    sizes: '(min-width: 990px) 15vw, 30vw',
+                    loading: 'lazy',
+                    alt: ''
+                }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'everyday-ritual__thumbnail placeholder' }}
+              {%- endif -%}
+            </div>
+          </details>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Everyday ritual",
+  "class": "everyday-ritual",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Find your everyday ritual."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Ritual step"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Everyday ritual",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Cleanse",
+            "description": "<p>A gentle, effective cleanse to refresh the skin and prepare for what's next.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Balance",
+            "description": "<p>Refresh and balance your skin after cleansing.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Hydrate",
+            "description": "<p>Complete your daily ritual with lasting hydration.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

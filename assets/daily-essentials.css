@@ -1,0 +1,188 @@
+.daily-essentials {
+  .daily-essentials__content {
+    display: block;
+    padding-block: calc(4 * var(--daily-essentials-space));
+
+    .daily-essentials__header {
+      display: flex;
+      align-items: center;
+      gap: var(--daily-essentials-space);
+      justify-content: space-between;
+      margin-block-end: calc(2 * var(--daily-essentials-space));
+
+      .daily-essentials__eyebrow {
+        margin: 0 0 var(--daily-essentials-space);
+        font-size: 0.75em;
+        text-transform: uppercase;
+      }
+
+      .daily-essentials__heading {
+        margin: 0;
+        color: inherit;
+        font: 400 var(--daily-essentials-heading-size) / 1.1
+          var(--daily-essentials-heading-font);
+        letter-spacing: normal;
+      }
+
+      .daily-essentials__controls {
+        display: flex;
+        align-items: center;
+        gap: var(--daily-essentials-space);
+
+        .daily-essentials__collection-link,
+        .daily-essentials__button {
+          flex-shrink: 0;
+        }
+
+        .daily-essentials__collection-link {
+          min-width: 44px;
+          min-height: 44px;
+          padding-block: var(--daily-essentials-space);
+          text-align: center;
+        }
+
+        .daily-essentials__button {
+          padding: calc(1.5 * var(--daily-essentials-space));
+          border: 0;
+          background: transparent;
+          color: inherit;
+          cursor: pointer;
+
+          svg {
+            width: 2rem;
+            height: 2rem;
+          }
+
+          &:disabled {
+            opacity: 0.5;
+            cursor: default;
+          }
+
+          &[name='previous'] svg {
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
+
+    .daily-essentials__products {
+      position: relative;
+      display: flex;
+      gap: var(--grid-mobile-horizontal-spacing);
+      margin: 0;
+      padding: var(--daily-essentials-space) 0;
+      list-style: none;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .daily-essentials__item {
+        flex: 0 0 var(--daily-essentials-card-size);
+        min-width: 0;
+        scroll-snap-align: start;
+
+        @media screen and (min-width: 750px) {
+          flex-basis: calc(
+            (100% - (var(--daily-essentials-desktop-columns) - 1) * var(--grid-desktop-horizontal-spacing)) /
+              var(--daily-essentials-desktop-columns)
+          );
+        }
+
+        .daily-essentials__card {
+          display: block;
+          font-size: var(--daily-essentials-body-size);
+
+          figure {
+            margin: 0;
+
+            .daily-essentials__image {
+              display: block;
+              width: 100%;
+              height: auto;
+              aspect-ratio: 1 / 1;
+              object-fit: cover;
+            }
+
+            figcaption {
+              margin-block-start: var(--daily-essentials-space);
+
+              .daily-essentials__title,
+              .price {
+                font: inherit;
+                letter-spacing: inherit;
+              }
+
+              .daily-essentials__title {
+                margin: 0;
+                color: inherit;
+
+                span[aria-hidden] {
+                  display: inline-block;
+                  margin-inline-start: var(--daily-essentials-space);
+                  vertical-align: middle;
+                }
+              }
+
+              .price {
+                margin-block-start: var(--daily-essentials-space);
+              }
+            }
+          }
+        }
+
+        .daily-essentials__card--custom {
+          figure {
+            .daily-essentials__image {
+              aspect-ratio: 2 / 1;
+            }
+
+            figcaption {
+              .daily-essentials__title {
+                font: 400 2rem / 1.3 var(--daily-essentials-heading-font);
+              }
+            }
+          }
+        }
+      }
+
+      @media screen and (min-width: 750px) {
+        gap: var(--grid-desktop-horizontal-spacing);
+      }
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &[href]:hover .daily-essentials__label,
+      &[href]:focus-visible .daily-essentials__label {
+        background-size: 100% 1px;
+      }
+    }
+
+    .daily-essentials__label {
+      background:
+        linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
+      transition: background-size var(--duration-medium) ease;
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
+    }
+
+    svg {
+      display: block;
+      height: auto;
+    }
+
+    a:focus-visible,
+    .daily-essentials__button:focus-visible,
+    .daily-essentials__products:focus-visible {
+      outline-offset: calc(-1 * var(--daily-essentials-space));
+    }
+  }
+}

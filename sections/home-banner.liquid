@@ -1,0 +1,299 @@
+{%- liquid
+  assign banner_image = section.settings.image | default: section.settings.mobile_image
+  assign mobile_image = section.settings.mobile_image
+  assign contact_layout = false
+  if section.settings.layout == 'contact' or section.settings.layout == 'contact_closing'
+    assign contact_layout = true
+  endif
+  assign image_sizes = 'calc(100vw - 20px)'
+  if section.settings.layout != 'home'
+    assign image_sizes = '100vw'
+  endif
+  if section.index == 1
+    assign image_priority = 'high'
+    assign image_loading = 'eager'
+  else
+    assign image_priority = 'auto'
+    assign image_loading = 'lazy'
+  endif
+-%}
+
+{{ 'home-banner.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --home-banner-margin: 1rem;
+    --home-banner-card: {{ section.settings.card_color }};
+    --home-banner-text: {{ section.settings.text_color }};
+    --home-banner-space: 0.8rem;
+    --home-banner-gap: calc(2 * var(--home-banner-space));
+    --home-banner-padding: calc(3 * var(--home-banner-space));
+    --home-banner-inset: calc(4 * var(--home-banner-space));
+    --home-banner-card-width: 40%;
+    --home-banner-ratio: 16 / 7;
+    --home-banner-mobile-ratio: 5 / 4;
+    --home-banner-max-height: none;
+    --home-banner-heading-font: Georgia, 'Times New Roman', serif;
+    --home-banner-heading-size: clamp(3.2rem, 4vw, 6.4rem);
+    --home-banner-body-size: 1.4rem;
+    {% if section.settings.layout != 'home' %}
+      --home-banner-margin: 0;
+      --home-banner-card: {{ section.settings.color_scheme.settings.background }};
+      --home-banner-text: {{ section.settings.color_scheme.settings.text }};
+      --home-banner-body-size: clamp(1.6rem, 2vw, 2.8rem);
+    {% endif %}
+    {% if section.settings.layout == 'evening' %}
+      --home-banner-max-height: 100vh;
+      --home-banner-ratio: 16 / 9;
+      --home-banner-mobile-ratio: 3 / 4;
+      --home-banner-heading-size: clamp(4.8rem, 11vw, 16rem);
+      @media screen and (min-width: 750px) {
+        --home-banner-heading-size: clamp(4.8rem, min(11vw, 18vh), 16rem);
+      }
+    {% elsif section.settings.layout == 'softer_landing' %}
+      --home-banner-ratio: 13 / 4;
+      --home-banner-heading-size: clamp(4.8rem, 11vw, 12rem);
+    {% elsif contact_layout %}
+      --home-banner-gap: calc(3 * var(--home-banner-space));
+      --home-banner-body-size: 1.5rem;
+      {% if section.settings.layout == 'contact_closing' %}
+        --home-banner-heading-size: clamp(4.8rem, 7vw, 8.8rem);
+        --home-banner-arrow-rotation: -45deg;
+      {% else %}
+        --home-banner-heading-size: clamp(4.6rem, 8vw, 10.6rem);
+        --home-banner-arrow-rotation: 90deg;
+      {% endif %}
+    {% endif %}
+  }
+  {% if section.settings.layout == 'contact' %}
+    .contact-page__background {
+      --contact-page-shade: color-mix(in srgb, {{ section.settings.color_scheme.settings.background }} 40%, transparent);
+      {% if banner_image != blank %}
+        --contact-page-image: url({{ mobile_image | default: banner_image | image_url: width: 768 }});
+        @media screen and (min-width: 750px) {
+          --contact-page-image: url({{ banner_image | image_url: width: 1536 }});
+        }
+      {% else %}
+        --contact-page-image: none;
+      {% endif %}
+    }
+  {% endif %}
+</style>
+
+{%- unless contact_layout -%}
+  <div class="home-banner__media{% if section.settings.layout != 'home' %} home-banner__media--evening{% endif %}{% if section.settings.layout == 'softer_landing' %} home-banner__media--softer{% endif %}">
+    {%- if banner_image != blank -%}
+      <picture>
+        {%- if mobile_image != blank and mobile_image != banner_image -%}
+          <source
+            media="(max-width: 749px)"
+            srcset="{{ mobile_image | image_url: width: 768 }} 768w, {{ mobile_image | image_url: width: 1086 }} 1086w"
+            sizes="{{ image_sizes }}"
+          >
+        {%- endif -%}
+        {{
+          banner_image
+          | image_url: width: 1920
+          | image_tag:
+            class: 'home-banner__image',
+            widths: '768, 1536, 1920',
+            sizes: image_sizes,
+            loading: image_loading,
+            fetchpriority: image_priority,
+            alt: banner_image.alt
+        }}
+      </picture>
+    {%- else -%}
+      {{- 'lifestyle-1' | placeholder_svg_tag: 'home-banner__image' -}}
+    {%- endif -%}
+  </div>
+{%- endunless -%}
+<div class="home-banner__card{% if section.settings.layout != 'home' %} home-banner__card--evening{% endif %}{% if section.settings.layout == 'evening' %} home-banner__card--hero{% elsif contact_layout %} home-banner__card--contact{% endif %}{% if section.settings.layout == 'contact_closing' %} home-banner__card--closing{% endif %}">
+  {%- if section.settings.layout == 'evening' or contact_layout -%}
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="home-banner__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    {%- endif -%}
+  {%- endif -%}
+  {%- if section.settings.layout == 'contact_closing' -%}
+    {%- if section.settings.closing_heading != blank -%}
+      <h2 class="home-banner__heading">{{ section.settings.closing_heading }}</h2>
+    {%- endif -%}
+  {%- elsif section.settings.heading != blank -%}
+    <h1 id="HomeBannerHeading-{{ section.id }}" class="home-banner__heading">
+      {{- section.settings.heading | escape | newline_to_br -}}
+    </h1>
+  {%- endif -%}
+  {%- if section.settings.text != blank -%}
+    <p class="home-banner__text">{{ section.settings.text | escape }}</p>
+  {%- endif -%}
+  {%- if section.settings.layout != 'softer_landing'
+    and section.settings.button_label != blank
+    and section.settings.button_link != blank
+  -%}
+    <a class="home-banner__button" href="{{ section.settings.button_link }}">
+      <span>{{ section.settings.button_label | escape }}</span>
+      <span aria-hidden="true">
+        {{- 'icon-arrow.svg' | inline_asset_content -}}
+      </span>
+    </a>
+  {%- endif -%}
+</div>
+{%- if section.settings.layout == 'contact' and section.settings.contact_label != blank -%}
+  <p class="home-banner__contact-label">{{ section.settings.contact_label | escape }}</p>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Home banner",
+  "class": "home-banner",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "home", "label": "Home" },
+        { "value": "evening", "label": "Evening" },
+        { "value": "softer_landing", "label": "Softer landing" },
+        { "value": "contact", "label": "Contact" },
+        { "value": "contact_closing", "label": "Contact closing" }
+      ],
+      "default": "home"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "visible_if": "{{ section.settings.layout == 'evening' or section.settings.layout == 'contact' or section.settings.layout == 'contact_closing' }}"
+    },
+    {
+      "type": "text",
+      "id": "contact_label",
+      "label": "Bottom label",
+      "default": "CONTACT US",
+      "visible_if": "{{ section.settings.layout == 'contact' }}"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-4",
+      "visible_if": "{{ section.settings.layout != 'home' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Desktop image",
+      "visible_if": "{{ section.settings.layout != 'contact_closing' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image",
+      "info": "Optional. Uses the desktop image when empty.",
+      "visible_if": "{{ section.settings.layout != 'contact_closing' }}"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A little care.\nEvery day.",
+      "visible_if": "{{ section.settings.layout != 'contact_closing' }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "closing_heading",
+      "label": "Heading",
+      "default": "A moment, <em>for conversation.</em>",
+      "visible_if": "{{ section.settings.layout == 'contact_closing' }}"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Considered formulations for daily rituals."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Explore skin care",
+      "visible_if": "{{ section.settings.layout != 'softer_landing' }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "default": "/collections/all",
+      "visible_if": "{{ section.settings.layout != 'softer_landing' }}"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card background",
+      "default": "#F0EDE4",
+      "visible_if": "{{ section.settings.layout == 'home' }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#272822",
+      "visible_if": "{{ section.settings.layout == 'home' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home banner"
+    },
+    {
+      "name": "Evening banner",
+      "settings": {
+        "layout": "evening",
+        "eyebrow": "THE EVENING RESET",
+        "heading": "Leave the\nday behind.",
+        "text": "A simple ritual for the end of the day.",
+        "button_label": "Discover the ritual",
+        "button_link": "/collections/all",
+        "color_scheme": "scheme-4"
+      }
+    },
+    {
+      "name": "Softer landing",
+      "settings": {
+        "layout": "softer_landing",
+        "eyebrow": "",
+        "heading": "A softer\nlanding.",
+        "text": "Make space for a daily moment of care.",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "scheme-4"
+      }
+    },
+    {
+      "name": "Contact banner",
+      "settings": {
+        "layout": "contact",
+        "eyebrow": "A CONVERSATION, CONSIDERED",
+        "heading": "Good conversations\nbegin here.",
+        "text": "For a little guidance, a question, or simply a word. We’re listening.",
+        "button_label": "Get in touch",
+        "button_link": "/pages/contact#ContactForm",
+        "color_scheme": "evening-olive"
+      }
+    },
+    {
+      "name": "Contact closing",
+      "settings": {
+        "layout": "contact_closing",
+        "eyebrow": "THOUGHTFUL CARE, ALWAYS",
+        "closing_heading": "A moment, <em>for conversation.</em>",
+        "text": "",
+        "button_label": "Explore skin care",
+        "button_link": "/collections/all",
+        "color_scheme": "evening-olive"
+      }
+    }
+  ]
+}
+{% endschema %}

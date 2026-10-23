@@ -1,0 +1,174 @@
+.contact-conversation {
+  background: var(--contact-conversation-background);
+  color: var(--contact-conversation-text);
+  font-size: 1.4rem;
+  line-height: 1.6;
+
+  h2,
+  p {
+    margin: 0;
+  }
+
+  .contact-conversation__label {
+    font-size: 1rem;
+    letter-spacing: 0.16em;
+  }
+
+  .contact-conversation__layout {
+    display: flex;
+    flex-direction: column;
+    gap: calc(5 * var(--contact-conversation-space));
+    padding: calc(7 * var(--contact-conversation-space)) 1.5rem;
+
+    @media screen and (min-width: 750px) {
+      padding-inline: 5rem;
+    }
+
+    @media screen and (min-width: 900px) {
+      flex-direction: row;
+      gap: 10%;
+      padding-block: calc(11 * var(--contact-conversation-space));
+    }
+
+    .contact-conversation__intro {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      gap: calc(2 * var(--contact-conversation-space));
+
+      h2 {
+        color: inherit;
+        font:
+          400 calc(clamp(3.6rem, 4.3vw, 5.8rem) * var(--font-heading-scale)) / 1.06 Georgia,
+          'Times New Roman',
+          serif;
+        letter-spacing: -0.045em;
+      }
+
+      .contact-conversation__topics {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+          display: flex;
+          gap: calc(3 * var(--contact-conversation-space));
+          border-top: 1px solid var(--contact-conversation-rule);
+          padding-block: calc(2 * var(--contact-conversation-space));
+
+          > span,
+          small {
+            font-size: 1.1rem;
+          }
+
+          small {
+            display: block;
+          }
+        }
+      }
+    }
+
+    .contact-conversation__form {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      gap: calc(3 * var(--contact-conversation-space));
+
+      .contact-conversation__field-row {
+        display: flex;
+        flex-direction: column;
+        gap: inherit;
+
+        @media screen and (min-width: 600px) {
+          flex-direction: row;
+        }
+
+        label {
+          flex: 1;
+        }
+      }
+
+      label {
+        display: flex;
+        flex-direction: column;
+        gap: var(--contact-conversation-space);
+        font-size: 1.1rem;
+
+        input,
+        select,
+        textarea {
+          border: 0;
+          border-bottom: 1px solid var(--contact-conversation-rule);
+          border-radius: 0;
+          padding: calc(var(--contact-conversation-space) / 2) 0;
+          background: transparent;
+          color: inherit;
+          font: inherit;
+          font-size: 1.6rem;
+
+          &:focus {
+            outline: none;
+            box-shadow: none;
+            border-color: var(--contact-conversation-text);
+          }
+        }
+
+        textarea {
+          resize: vertical;
+        }
+      }
+
+      .contact-conversation__submit {
+        display: flex;
+        flex-direction: column;
+        gap: calc(2 * var(--contact-conversation-space));
+
+        @media screen and (min-width: 600px) {
+          flex-direction: row;
+          align-items: center;
+        }
+
+        p {
+          flex: 1;
+          font-size: 1.1rem;
+        }
+
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: calc(3 * var(--contact-conversation-space));
+          border: 1px solid var(--contact-conversation-text);
+          padding: var(--contact-conversation-space) calc(2 * var(--contact-conversation-space));
+          color: var(--contact-conversation-background);
+          font: inherit;
+          cursor: pointer;
+          background: linear-gradient(
+              var(--contact-conversation-background),
+              var(--contact-conversation-background)
+            )
+            left / 0 100% no-repeat var(--contact-conversation-text);
+          transition:
+            background-size var(--duration-medium) ease,
+            color var(--duration-medium) ease;
+
+          &:hover,
+          &:focus-visible {
+            background-size: 100% 100%;
+            color: var(--contact-conversation-text);
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            transition: none;
+          }
+
+          svg {
+            display: block;
+            width: 1.25em;
+            height: auto;
+          }
+        }
+      }
+    }
+  }
+}

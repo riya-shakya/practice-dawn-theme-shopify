@@ -1,0 +1,184 @@
+{{ 'contact-conversation.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --contact-conversation-background: {{ section.settings.color_scheme.settings.background }};
+    --contact-conversation-text: {{ section.settings.color_scheme.settings.text }};
+    --contact-conversation-rule: color-mix(in srgb, var(--contact-conversation-text) 28%, transparent);
+    --contact-conversation-space: max(var(--grid-desktop-horizontal-spacing), 1rem);
+  }
+</style>
+
+{%- assign form_id = 'ContactConversationForm-' | append: section.id -%}
+
+<div id="contact" class="contact-conversation__layout">
+  <div class="contact-conversation__intro">
+    {%- if section.settings.label != blank -%}
+      <p class="contact-conversation__label">{{ section.settings.label | escape }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2>{{ section.settings.heading | escape | newline_to_br }}</h2>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <p>{{ section.settings.text | escape | newline_to_br }}</p>
+    {%- endif -%}
+    {%- if section.blocks.size > 0 -%}
+      <ol class="contact-conversation__topics" role="list">
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }}>
+            <span aria-hidden="true">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
+            <p>
+              {{ block.settings.title | default: 'Something else' | escape }}
+              {%- if block.settings.text != blank -%}
+                <small>{{ block.settings.text | escape }}</small>
+              {%- endif -%}
+            </p>
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+  </div>
+
+  {%- form 'contact', id: form_id, class: 'contact-conversation__form' -%}
+    {%- if section.settings.form_label != blank -%}
+      <p class="contact-conversation__label">{{ section.settings.form_label | escape }}</p>
+    {%- endif -%}
+    {%- if form.posted_successfully? -%}
+      <p role="status" tabindex="-1" autofocus>{{ 'templates.contact.form.post_success' | t }}</p>
+    {%- elsif form.errors -%}
+      <div role="alert" tabindex="-1" autofocus>
+        {{ form.errors | default_errors }}
+      </div>
+    {%- endif -%}
+
+    <div class="contact-conversation__field-row">
+      <label for="{{ form_id }}-name">
+        Your name
+        <input
+          id="{{ form_id }}-name"
+          name="contact[name]"
+          autocomplete="name"
+          pattern="[\p{L}\p{M}]+(?:[ ’'\-][\p{L}\p{M}]+)*"
+          title="Use letters, spaces, hyphens or apostrophes."
+          value="{{ form.name | default: customer.name | escape }}"
+          required
+        >
+      </label>
+      <label for="{{ form_id }}-email">
+        Email address
+        <input
+          id="{{ form_id }}-email"
+          name="contact[email]"
+          type="email"
+          autocomplete="email"
+          autocapitalize="off"
+          spellcheck="false"
+          value="{{ form.email | default: customer.email | escape }}"
+          required
+        >
+      </label>
+    </div>
+
+    <label for="{{ form_id }}-topic">
+      What can we help with?
+      <select id="{{ form_id }}-topic" name="contact[Topic]" required>
+        <option value="" disabled selected>Select a topic</option>
+        {%- for block in section.blocks -%}
+          <option>{{ block.settings.title | default: 'Something else' | escape }}</option>
+        {%- else -%}
+          <option>Something else</option>
+        {%- endfor -%}
+      </select>
+    </label>
+
+    <label for="{{ form_id }}-message">
+      Your message
+      <textarea
+        id="{{ form_id }}-message"
+        name="contact[body]"
+        rows="4"
+        placeholder="A little detail goes a long way."
+        required
+      >{{ form.body | escape }}</textarea>
+    </label>
+
+    <div class="contact-conversation__submit">
+      {%- if section.settings.note != blank -%}
+        <p>{{ section.settings.note | escape }}</p>
+      {%- endif -%}
+      <button type="submit">
+        {{ section.settings.submit_label | default: 'Send message' | escape }}
+        <span aria-hidden="true">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+      </button>
+    </div>
+  {%- endform -%}
+</div>
+
+{% schema %}
+{
+  "name": "Contact conversation",
+  "class": "contact-conversation",
+  "limit": 1,
+  "settings": [
+    { "type": "text", "id": "label", "label": "Intro label", "default": "HERE TO HELP" },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A little guidance.\nA human connection."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Description",
+      "default": "Tell us what’s on your mind.\nLet’s find a thoughtful way forward."
+    },
+    { "type": "text", "id": "form_label", "label": "Form label", "default": "SEND A NOTE" },
+    { "type": "text", "id": "submit_label", "label": "Button label", "default": "Send message" },
+    { "type": "textarea", "id": "note", "label": "Note beside the button" },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "evening-cream"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "topic",
+      "name": "Topic",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Product guidance" },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Description",
+          "default": "Finding your everyday essentials."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact conversation",
+      "blocks": [
+        {
+          "type": "topic",
+          "settings": { "title": "Product guidance", "text": "Finding your everyday essentials." }
+        },
+        {
+          "type": "topic",
+          "settings": { "title": "Your order", "text": "A question about your purchase." }
+        },
+        {
+          "type": "topic",
+          "settings": {
+            "title": "Something else",
+            "text": "There’s always room for a conversation."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
