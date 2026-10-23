@@ -233,19 +233,19 @@
 
   @media (prefers-reduced-motion: no-preference) {
     background-attachment: fixed;
-  }
 
-  &.contact-page__background--fallback {
-    clip-path: inset(0);
+    &.contact-page__background--fallback {
+      clip-path: inset(0);
 
-    &::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background: inherit;
-      background-attachment: scroll;
-      pointer-events: none;
+      &::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background: inherit;
+        background-attachment: scroll;
+        pointer-events: none;
+      }
     }
   }
 }
