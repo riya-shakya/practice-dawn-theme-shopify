@@ -18,7 +18,7 @@
   }
 </style>
 
-{{ 'header-new.css' | asset_url | stylesheet_tag }}
+{{ 'header-new.css' | asset_url | stylesheet_tag: preload: true }}
 <script src="{{'header-new.js' |  asset_url}}" async></script>
 
 <custom-header class="header">

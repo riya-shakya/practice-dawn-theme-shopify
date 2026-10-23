@@ -15,7 +15,11 @@
 {% if product.metafields.custom.accompany_with_images.value.size > 0 %}
 <div class="img-section">
   {% for img in product.metafields.custom.accompany_with_images.value %}
-    {{ img | image_url: width: 1200 | image_tag: class: 'accompany-img' }}
+    {{
+      img
+      | image_url: width: 900
+      | image_tag: class: 'accompany-img', widths: '300, 600, 900', sizes: '300px'
+    }}
   {% endfor %}
 </div>
 {% endif %}
