@@ -5,7 +5,7 @@
   }
 </style>
 
-{{ 'component-collection-new.css' | asset_url | stylesheet_tag }}
+{{ 'component-collection-new.css' | asset_url | stylesheet_tag: preload: true }}
 <script src="{{ 'custom-collection.js' |  asset_url }}" defer></script>
 
 <custom-collection data-section-id="{{section.id}}">
@@ -59,10 +59,22 @@
     {% paginate collection.products by 12 %}
       <div class="products">
         {% for product in collection.products %}
+          {% liquid
+            assign image_loading = 'lazy'
+            assign image_priority = 'auto'
+            if forloop.first
+              assign image_loading = 'eager'
+              assign image_priority = 'high'
+            endif
+          %}
           <a href="{{product.url}}">
             <figure class="collection__product">
               <div class="product__img-container">
-                {{ product.featured_image | image_url: width: 200 | image_tag }}
+                {{
+                  product.featured_image
+                  | image_url: width: 200
+                  | image_tag: loading: image_loading, fetchpriority: image_priority
+                }}
               </div>
               <figcaption>
                 <p>{{ product.title }}</p>
