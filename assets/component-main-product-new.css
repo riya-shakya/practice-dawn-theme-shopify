@@ -44,6 +44,7 @@
 
 .metafield__key-ingredient {
   border-bottom: none;
+  margin-bottom: 15px;
 }
 
 .metafield__key-ingredient::details-content {
