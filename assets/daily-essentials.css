@@ -76,6 +76,10 @@
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
 
+      @media (prefers-reduced-motion: no-preference) {
+        scroll-behavior: smooth;
+      }
+
       &::-webkit-scrollbar {
         display: none;
       }
@@ -142,7 +146,12 @@
 
             figcaption {
               .daily-essentials__title {
-                font: 400 2rem / 1.3 var(--daily-essentials-heading-font);
+                font: 400 var(--daily-essentials-body-size) / 1.3
+                  var(--daily-essentials-heading-font);
+
+                @media screen and (min-width: 750px) {
+                  font-size: 2rem;
+                }
               }
             }
           }

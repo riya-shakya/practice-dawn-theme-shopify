@@ -30,24 +30,30 @@
           "type": "step",
           "settings": {
             "title": "Cleanse",
+            "image": "shopify://shop_images/cedar-cleansing-balm.png",
             "description": "<p>A gentle, effective cleanse to refresh the skin and prepare for what's next.</p>",
-            "link_label": "Explore cleansers"
+            "link_label": "Explore cleansers",
+            "link": "/collections/skincare?filter.p.m.custom.product_type=Cleanser"
           }
         },
         "balance": {
           "type": "step",
           "settings": {
             "title": "Balance",
+            "image": "shopify://shop_images/chamomile-essence.png",
             "description": "<p>Refresh and balance your skin after cleansing.</p>",
-            "link_label": "Explore toners"
+            "link_label": "Explore toners",
+            "link": "/collections/skincare?filter.p.m.custom.product_type=Toner"
           }
         },
         "hydrate": {
           "type": "step",
           "settings": {
             "title": "Hydrate",
+            "image": "shopify://shop_images/barrier-comfort-cream.png",
             "description": "<p>Complete your daily ritual with lasting hydration.</p>",
-            "link_label": "Explore moisturisers"
+            "link_label": "Explore moisturisers",
+            "link": "/collections/skincare?filter.p.m.custom.product_type=Moisturiser"
           }
         }
       },
@@ -64,19 +70,25 @@
         "dry_skin": {
           "type": "card",
           "settings": {
-            "title": "For dry skin"
+            "title": "For dry skin",
+            "image": "shopify://shop_images/barrier-comfort-cream.png",
+            "link": "/collections/skincare?filter.p.m.custom.product_type=Moisturiser"
           }
         },
         "dull_skin": {
           "type": "card",
           "settings": {
-            "title": "For dull skin"
+            "title": "For dull skin",
+            "image": "shopify://shop_images/dew-hydration-serum.png",
+            "link": "/collections/skincare?filter.p.m.custom.product_type=Serum"
           }
         },
         "everyday_balance": {
           "type": "card",
           "settings": {
-            "title": "For everyday balance"
+            "title": "For everyday balance",
+            "image": "shopify://shop_images/chamomile-essence.png",
+            "link": "/collections/skincare?filter.p.m.custom.product_type=Toner"
           }
         }
       },
@@ -85,6 +97,7 @@
         "mode": "custom_cards",
         "eyebrow": "Skin concern",
         "heading": "Care, made personal.",
+        "link": "shopify://collections/skincare",
         "color_scheme": "scheme-1"
       }
     }

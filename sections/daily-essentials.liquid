@@ -31,7 +31,7 @@
 <style>
   #shopify-section-{{ section.id }} {
     --daily-essentials-space: 0.8rem;
-    --daily-essentials-heading-size: clamp(2.4rem, 3vw, 4.8rem);
+    --daily-essentials-heading-size: clamp(2rem, 3vw, 4.8rem);
     --daily-essentials-heading-font: Georgia, 'Times New Roman', serif;
     --daily-essentials-card-size: 44%;
     --daily-essentials-desktop-columns: {{ desktop_columns }};
@@ -148,7 +148,7 @@
                       </h3>
                     {%- endif -%}
                     {%- if mode == 'collection' -%}
-                      {% render 'price', product: item %}
+                      {% render 'price', product: item, use_variant: true %}
                     {%- endif -%}
                   </figcaption>
                 {%- endif -%}

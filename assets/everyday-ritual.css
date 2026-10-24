@@ -69,7 +69,22 @@
         .everyday-ritual__step {
           border-block-end: 1px solid rgba(var(--color-foreground), 0.3);
 
+          &::details-content {
+            display: grid;
+            overflow: hidden;
+            grid-template-rows: minmax(0, 0fr);
+
+            @media (prefers-reduced-motion: no-preference) {
+              transition: all var(--duration-medium) ease-in-out;
+              transition-behavior: allow-discrete;
+            }
+          }
+
           &[open] {
+            &::details-content {
+              grid-template-rows: minmax(0, 1fr);
+            }
+
             @media screen and (min-width: 990px) {
               flex: 1;
             }
