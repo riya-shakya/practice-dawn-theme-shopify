@@ -7,42 +7,44 @@
 
 {{ 'footer-new.css' | asset_url | stylesheet_tag }}
 
-<div class="subscribe">
-  <h3>Subscribe to our Communications</h3>
-  {% form 'customer' %}
-    <input type="email" name="contact[email]" placeholder="Email address" />
-    <button type="submit" aria-label="Subscribe">{{ 'icon-arrow.svg' | inline_asset_content }}</button>
+<div class="custom-footer__content">
+  <div class="subscribe">
+    <h3>Subscribe to our Communications</h3>
+    {% form 'customer' %}
+      <input type="email" name="contact[email]" placeholder="Email address" />
+      <button type="submit" aria-label="Subscribe">{{ 'icon-arrow.svg' | inline_asset_content }}</button>
 
-    {% if form.posted_successfully? %}
-      <p>Subscribed Successfully</p>
-    {% endif %}
-  {% endform %}
-</div>
+      {% if form.posted_successfully? %}
+        <p>Subscribed Successfully</p>
+      {% endif %}
+    {% endform %}
+  </div>
 
-<div class="navigation">
-  {% for block in section.blocks %}
-    {% case block.type %}
-      {% when 'navigation' %}
-        <div {{ block.shopify_attributes }} class="nav-block">
-          {% if block.settings.nav_heading != blank %}
-            <h3>{{ block.settings.nav_heading }}</h3>
-          {% endif %}
-          {% if block.settings.nav_link_list != blank %}
-            <nav>
-              <ul>
-                {% for link in block.settings.nav_link_list.links %}
-                  <li>
-                    <a href="{{link.url}}">{{ link.title }}</a>
-                  </li>
-                {% endfor %}
-              </ul>
-            </nav>
-          {% endif %}
-        </div>
-      {% else %}
+  <div class="navigation">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'navigation' %}
+          <div {{ block.shopify_attributes }} class="nav-block">
+            {% if block.settings.nav_heading != blank %}
+              <h3>{{ block.settings.nav_heading }}</h3>
+            {% endif %}
+            {% if block.settings.nav_link_list != blank %}
+              <nav>
+                <ul>
+                  {% for link in block.settings.nav_link_list.links %}
+                    <li>
+                      <a href="{{link.url}}">{{ link.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </nav>
+            {% endif %}
+          </div>
+        {% else %}
 
-    {% endcase %}
-  {% endfor %}
+      {% endcase %}
+    {% endfor %}
+  </div>
 </div>
 
 {% schema %}

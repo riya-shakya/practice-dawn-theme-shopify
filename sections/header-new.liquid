@@ -9,7 +9,7 @@
 %}
 
 <style>
-  custom-header.header{
+  #shopify-section-{{ section.id }} {
     --bg-clr: {{section.settings.color_scheme.settings.background}};
     --text-clr: {{ section.settings.color_scheme.settings.text }};
     --logo-align: {{ logo_align }};
@@ -18,7 +18,7 @@
   }
 </style>
 
-{{ 'header-new.css' | asset_url | stylesheet_tag }}
+{{ 'header-new.css' | asset_url | stylesheet_tag: preload: true }}
 <script src="{{'header-new.js' |  asset_url}}" async></script>
 
 <custom-header class="header">
@@ -60,6 +60,7 @@
 {% schema %}
 {
   "name": "header",
+  "class": "site-header",
   "settings": [
     {
       "type": "link_list",

@@ -1,5 +1,12 @@
 {{ 'next-step.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  assign card_image_sizes = '(min-width: 750px) calc((min(100vw, 1920px) - 10rem) * 0.6), calc(100vw - 3rem)'
+  if section.blocks.size == 2
+    assign card_image_sizes = '(min-width: 750px) calc((min(100vw, 1920px) - 10rem) * 0.3 - 2rem), calc(100vw - 3rem)'
+  endif
+-%}
+
 <style>
   #shopify-section-{{ section.id }} {
     --next-step-background: {{ section.settings.color_scheme.settings.background }};
@@ -40,7 +47,7 @@
               | image_tag:
                 class: 'next-step__image',
                 widths: '384, 768',
-                sizes: '(min-width: 750px) 30vw, 100vw',
+                sizes: card_image_sizes,
                 loading: 'lazy'
             }}
           {%- else -%}

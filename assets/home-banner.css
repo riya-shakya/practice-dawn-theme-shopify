@@ -1,6 +1,5 @@
 .home-banner {
   display: grid;
-  margin-inline: var(--home-banner-margin);
   color: var(--home-banner-text);
 
   .home-banner__media {

@@ -3,118 +3,123 @@
 
   background-color: var(--bg-clr);
   color: var(--text-clr);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 2rem;
 
-  h3 {
-    color: inherit;
-    font-weight: 700;
-    opacity: 0.6;
-  }
-
-  .subscribe {
+  .custom-footer__content {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-
-    form {
-      display: flex;
-
-      input[type="email"] {
-        flex: 0 1 auto;
-        padding: 0.5rem;
-        width: 100%;
-        border: none;
-        border-bottom: 1px solid var(--grey-clr);
-        background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat
-          var(--bg-clr);
-        color: inherit;
-        transition: background-size var(--duration-medium) ease;
-
-        @media (prefers-reduced-motion: reduce) {
-          transition: none;
-        }
-
-        &::placeholder {
-          color: inherit;
-          opacity: 1;
-          font-size: 18px;
-          font-weight: 500;
-        }
-
-        &:focus-visible {
-          outline: none;
-          box-shadow: none;
-          background-size: 100% 1px;
-        }
-      }
-
-      button {
-        border: none;
-        background: inherit;
-        margin-left: -25px;
-        color: inherit;
-
-        svg {
-          width: 20px;
-          height: 20px;
-        }
-      }
-    }
-  }
-
-  .navigation {
-    flex: 1 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-
-    .nav-block {
-      border-bottom: 1px solid var(--grey-clr);
-
-      ul {
-        padding-left: 0;
-        list-style: none;
-      }
-
-      li {
-        padding: 1rem;
-      }
-
-      a {
-        color: var(--text-clr);
-        text-decoration: none;
-        background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
-        transition: background-size var(--duration-medium) ease;
-
-        @media (prefers-reduced-motion: reduce) {
-          transition: none;
-        }
-
-        &:hover,
-        &:focus-visible {
-          background-size: 100% 1px;
-        }
-      }
-
-      @media only screen and (min-width: 1024px) {
-        border-bottom: none;
-      }
-    }
-
-    & > :last-child {
-      border-bottom: none;
-    }
+    justify-content: space-between;
+    gap: 10px;
+    max-width: var(--page-width);
+    margin-inline: auto;
+    padding: 2rem;
 
     @media only screen and (min-width: 1024px) {
       flex-direction: row;
     }
-  }
 
-  @media only screen and (min-width: 1024px) {
-    flex-direction: row;
+    h3 {
+      color: inherit;
+      font-weight: 700;
+      opacity: 0.6;
+    }
+
+    .subscribe {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      form {
+        display: flex;
+
+        input[type="email"] {
+          flex: 0 1 auto;
+          padding: 0.5rem;
+          width: 100%;
+          border: none;
+          border-bottom: 1px solid var(--grey-clr);
+          background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat
+            var(--bg-clr);
+          color: inherit;
+          transition: background-size var(--duration-medium) ease;
+
+          @media (prefers-reduced-motion: reduce) {
+            transition: none;
+          }
+
+          &::placeholder {
+            color: inherit;
+            opacity: 1;
+            font-size: 18px;
+            font-weight: 500;
+          }
+
+          &:focus-visible {
+            outline: none;
+            box-shadow: none;
+            background-size: 100% 1px;
+          }
+        }
+
+        button {
+          border: none;
+          background: inherit;
+          margin-left: -25px;
+          color: inherit;
+
+          svg {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
+
+    .navigation {
+      flex: 1 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+
+      .nav-block {
+        border-bottom: 1px solid var(--grey-clr);
+
+        ul {
+          padding-left: 0;
+          list-style: none;
+        }
+
+        li {
+          padding: 1rem;
+        }
+
+        a {
+          color: var(--text-clr);
+          text-decoration: none;
+          background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
+          transition: background-size var(--duration-medium) ease;
+
+          @media (prefers-reduced-motion: reduce) {
+            transition: none;
+          }
+
+          &:hover,
+          &:focus-visible {
+            background-size: 100% 1px;
+          }
+        }
+
+        @media only screen and (min-width: 1024px) {
+          border-bottom: none;
+        }
+      }
+
+      & > :last-child {
+        border-bottom: none;
+      }
+
+      @media only screen and (min-width: 1024px) {
+        flex-direction: row;
+      }
+    }
   }
 }

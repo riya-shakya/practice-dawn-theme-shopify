@@ -24,7 +24,16 @@
 
 <h2 class="product__vendor">{{ product.vendor }}</h2>
 <div class="product__title-and-image">
-  {{ product.featured_image | image_url: width: 1200 | image_tag: class: 'product__image' }}
+  {{
+    product.featured_image
+    | image_url: width: 1200
+    | image_tag:
+      class: 'product__image',
+      widths: '400, 800, 1200',
+      sizes: '(min-width: 768px) calc((min(100vw, 1920px) - 60px) * 0.3), calc(100vw - 4rem)',
+      loading: 'eager',
+      fetchpriority: 'high'
+  }}
 
   {% if product.variants.size > 1 %}
     <custom-variant-selector data-section-id="{{section.id}}" class="product__variants">

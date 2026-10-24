@@ -1,9 +1,12 @@
 {{ 'evening-header.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sticky-evening-header.js' | asset_url }}" defer></script>
 
 <style>
   #shopify-section-{{ section.id }} {
     --evening-header-text: {{ section.settings.color_scheme.settings.text }};
     --evening-header-fill: {{ section.settings.color_scheme.settings.background }};
+    --evening-header-sticky-text: {{ section.settings.sticky_color_scheme.settings.text }};
+    --evening-header-sticky-fill: {{ section.settings.sticky_color_scheme.settings.background }};
     --evening-header-space: min(var(--grid-mobile-horizontal-spacing), 1rem);
 
     @media screen and (min-width: 750px) {
@@ -12,29 +15,43 @@
   }
 </style>
 
-<div class="evening-header__content page-width">
-  <a class="evening-header__logo" href="{{ routes.root_url }}">
-    {%- if section.settings.logo != blank -%}
-      {{
-        section.settings.logo
-        | image_url: width: 320
-        | image_tag: widths: '160, 320', sizes: '160px', alt: shop.name, loading: 'eager'
-      }}
-    {%- else -%}
-      {{- section.settings.logo_text | default: shop.name | escape -}}
-    {%- endif -%}
-  </a>
-  <div class="evening-header__actions">
-    {%- if section.settings.campaign_label != blank -%}
-      <p class="evening-header__label">{{ section.settings.campaign_label | escape }}</p>
-    {%- endif -%}
-    {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
-      <a class="evening-header__button" href="{{ section.settings.button_link | escape }}">
-        {{- section.settings.button_label | escape -}}
-      </a>
-    {%- endif -%}
+<sticky-evening-header>
+  <div class="evening-header__content page-width">
+    <a class="evening-header__logo" href="{{ routes.root_url }}">
+      {%- assign logo_states = 'default,sticky' | split: ',' -%}
+      {%- for logo_state in logo_states -%}
+        {%- liquid
+          assign logo_image = section.settings.logo
+          if logo_state == 'sticky'
+            assign logo_image = section.settings.sticky_logo
+          endif
+          assign logo_class = 'evening-header__logo-' | append: logo_state
+        -%}
+        <span class="{{ logo_class }}">
+          {%- if logo_image != blank -%}
+            {{
+              logo_image
+              | image_url: width: 320
+              | image_tag: widths: '160, 320', sizes: '160px', alt: shop.name, loading: 'eager'
+            }}
+          {%- else -%}
+            {{ section.settings.logo_text | default: shop.name | escape }}
+          {%- endif -%}
+        </span>
+      {%- endfor -%}
+    </a>
+    <div class="evening-header__actions">
+      {%- if section.settings.campaign_label != blank -%}
+        <p class="evening-header__label">{{ section.settings.campaign_label | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+        <a class="evening-header__button" href="{{ section.settings.button_link | escape }}">
+          {{- section.settings.button_label | escape -}}
+        </a>
+      {%- endif -%}
+    </div>
   </div>
-</div>
+</sticky-evening-header>
 
 {% schema %}
 {
@@ -46,6 +63,11 @@
       "type": "image_picker",
       "id": "logo",
       "label": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "sticky_logo",
+      "label": "Logo when scrolling"
     },
     {
       "type": "text",
@@ -76,6 +98,12 @@
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "scheme-4"
+    },
+    {
+      "type": "color_scheme",
+      "id": "sticky_color_scheme",
+      "label": "Color scheme when scrolling",
+      "default": "scheme-1"
     }
   ]
 }

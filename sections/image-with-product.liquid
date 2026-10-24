@@ -18,8 +18,8 @@
       | image_url: width: 1254
       | image_tag:
         class: 'image-with-product__image',
-        widths: '768, 1254',
-        sizes: '(min-width: 750px) 50vw, 100vw',
+        widths: '416, 768, 1254',
+        sizes: '(min-width: 750px) min(50vw, 960px), 100vw',
         loading: 'lazy'
     }}
   {%- else -%}
@@ -33,7 +33,7 @@
         | image_tag:
           class: 'image-with-product__panel-image',
           widths: '1254, 2172',
-          sizes: '(min-width: 750px) 50vw, 100vw',
+          sizes: '(min-width: 750px) min(50vw, 960px), 100vw',
           loading: 'lazy',
           alt: ''
       }}

@@ -5,10 +5,6 @@
   if section.settings.layout == 'contact' or section.settings.layout == 'contact_closing'
     assign contact_layout = true
   endif
-  assign image_sizes = 'calc(100vw - 20px)'
-  if section.settings.layout != 'home'
-    assign image_sizes = '100vw'
-  endif
   if section.index == 1
     assign image_priority = 'high'
     assign image_loading = 'eager'
@@ -22,7 +18,6 @@
 
 <style>
   #shopify-section-{{ section.id }} {
-    --home-banner-margin: 1rem;
     --home-banner-card: {{ section.settings.card_color }};
     --home-banner-text: {{ section.settings.text_color }};
     --home-banner-space: 0.8rem;
@@ -37,7 +32,6 @@
     --home-banner-heading-size: clamp(3.2rem, 4vw, 6.4rem);
     --home-banner-body-size: 1.4rem;
     {% if section.settings.layout != 'home' %}
-      --home-banner-margin: 0;
       --home-banner-card: {{ section.settings.color_scheme.settings.background }};
       --home-banner-text: {{ section.settings.color_scheme.settings.text }};
       --home-banner-body-size: clamp(1.6rem, 2vw, 2.8rem);
@@ -87,8 +81,8 @@
         {%- if mobile_image != blank and mobile_image != banner_image -%}
           <source
             media="(max-width: 749px)"
-            srcset="{{ mobile_image | image_url: width: 768 }} 768w, {{ mobile_image | image_url: width: 1086 }} 1086w"
-            sizes="{{ image_sizes }}"
+            srcset="{{ mobile_image | image_url: width: 416 }} 416w, {{ mobile_image | image_url: width: 768 }} 768w, {{ mobile_image | image_url: width: 1086 }} 1086w"
+            sizes="100vw"
           >
         {%- endif -%}
         {{
@@ -96,8 +90,8 @@
           | image_url: width: 1920
           | image_tag:
             class: 'home-banner__image',
-            widths: '768, 1536, 1920',
-            sizes: image_sizes,
+            widths: '416, 768, 1536, 1920',
+            sizes: 'min(100vw, 1920px)',
             loading: image_loading,
             fetchpriority: image_priority,
             alt: banner_image.alt

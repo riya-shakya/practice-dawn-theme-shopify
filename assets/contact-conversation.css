@@ -15,6 +15,7 @@
   }
 
   .contact-conversation__layout {
+    scroll-margin-top: calc(4 * var(--contact-conversation-space));
     display: flex;
     flex-direction: column;
     gap: calc(5 * var(--contact-conversation-space));
