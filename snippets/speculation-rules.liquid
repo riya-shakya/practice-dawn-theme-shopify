@@ -1,0 +1,25 @@
+{% doc %}
+  Prefetch linked collection, product, Contact and Evening pages eagerly;
+  prerender them when the browser detects moderate navigation intent.
+{% enddoc %}
+
+<script type="speculationrules">
+  {
+    "prefetch": [
+      {
+        "where": {
+          "href_matches": ["/collections/*", "/products/*", "/pages/contact"]
+        },
+        "eagerness": "eager"
+      }
+    ],
+    "prerender": [
+      {
+        "where": {
+          "href_matches": ["/collections/*", "/products/*", "/pages/contact"]
+        },
+        "eagerness": "moderate"
+      }
+    ]
+  }
+</script>
