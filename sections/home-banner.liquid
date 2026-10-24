@@ -63,7 +63,10 @@
     .contact-page__background {
       --contact-page-shade: color-mix(in srgb, {{ section.settings.color_scheme.settings.background }} 40%, transparent);
       {% if banner_image != blank %}
-        --contact-page-image: url({{ mobile_image | default: banner_image | image_url: width: 768 }});
+        --contact-page-image: url({{ mobile_image | default: banner_image | image_url: width: 416 }});
+        @media screen and (min-width: 417px) {
+          --contact-page-image: url({{ mobile_image | default: banner_image | image_url: width: 768 }});
+        }
         @media screen and (min-width: 750px) {
           --contact-page-image: url({{ banner_image | image_url: width: 1536 }});
         }
