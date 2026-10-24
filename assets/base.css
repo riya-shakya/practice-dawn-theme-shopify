@@ -85,6 +85,12 @@ collection-component {
 
 /* base */
 
+#MainContent {
+  width: 100%;
+  max-width: var(--page-width);
+  margin-inline: auto;
+}
+
 .page-width {
   max-width: var(--page-width);
   margin: 0 auto;

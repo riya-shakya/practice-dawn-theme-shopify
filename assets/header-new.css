@@ -2,7 +2,16 @@ body {
   overscroll-behavior: contain;
 }
 
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background-color: var(--bg-clr);
+}
+
 custom-header.header {
+  max-width: var(--page-width);
+  margin-inline: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;

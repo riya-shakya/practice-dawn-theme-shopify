@@ -16,7 +16,7 @@
   endif
 
   assign font_scale = settings.body_scale | divided_by: 100.0
-  assign image_sizes = '(min-width: 750px) calc((min(100vw, calc(PAGE_WIDTHpx * FONT_SCALE)) - 100px * FONT_SCALE - GRID_GAPpx * (COLUMNS - 1)) / COLUMNS), calc((100vw - 30px * FONT_SCALE) * 0.44)'
+  assign image_sizes = '(min-width: 750px) calc((min(100vw, PAGE_WIDTHpx) - 100px * FONT_SCALE - GRID_GAPpx * (COLUMNS - 1)) / COLUMNS), calc((100vw - 30px * FONT_SCALE) * 0.44)'
   assign image_sizes = image_sizes | replace: 'PAGE_WIDTH', settings.page_width
   assign image_sizes = image_sizes | replace: 'GRID_GAP', settings.spacing_grid_horizontal
   assign image_sizes = image_sizes | replace: 'COLUMNS', desktop_columns

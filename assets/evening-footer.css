@@ -3,7 +3,6 @@
   color: var(--evening-footer-text);
 
   .evening-footer__content {
-    max-width: none;
     padding-block: calc(4 * var(--evening-footer-space));
 
     .evening-footer__intro {
