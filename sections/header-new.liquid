@@ -48,9 +48,9 @@
     </ul>
   </div>
   {% if section.settings.logo %}
-    <div class="menu__logo-container">
+    <a class="menu__logo-container" href="{{ routes.root_url }}">
       {{ section.settings.logo | image_url: width: 570 | image_tag: widths: '160, 190, 320, 380, 570', sizes: '(max-width: 768px) 160px, 190px' }}
-    </div>
+    </a>
   {% endif %}
   <div class="menu__cart-container">
     <a href="{{routes.cart_url}}" aria-label="Cart link">{{ 'icon-cart.svg' | inline_asset_content }}</a>
