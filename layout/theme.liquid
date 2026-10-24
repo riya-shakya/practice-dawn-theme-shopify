@@ -2,6 +2,18 @@
 <html class="js" lang="{{ request.locale.iso_code }}">
   <head>
     <meta charset="utf-8">
+    {%- if template.name == 'collection' -%}
+      {%- paginate collection.products by 12 -%}
+        {%- if collection.products.first.featured_image != blank -%}
+          <link
+            rel="preload"
+            as="image"
+            href="{{ collection.products.first.featured_image | image_url: width: 200 }}"
+            fetchpriority="high"
+          >
+        {%- endif -%}
+      {%- endpaginate -%}
+    {%- endif -%}
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="">
